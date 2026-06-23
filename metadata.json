@@ -1,0 +1,6 @@
+{
+  "name": "Sharma Prop Mart",
+  "description": "Real Estate Builders & Construction Company. Premium property portal with sector-wise listings for Yamuna Expressway and Greater Noida, with direct WhatsApp inquiry routing.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
