@@ -1,11 +1,11 @@
 import React from 'react';
 import { InquiryFormData } from '../types';
-import { OFFICE_CONTACT } from '../data';
-import { MessageSquare, ClipboardList, CheckCircle2, RefreshCw, Send, AlertCircle } from 'lucide-react';
+import { OFFICE_CONTACT, WHATSAPP_REPRESENTATIVES } from '../data';
+import { MessageSquare, ClipboardList, CheckCircle2, RefreshCw, Send, AlertCircle, HelpCircle } from 'lucide-react';
 
 interface RequirementFormProps {
   initialData: InquiryFormData;
-  onSubmitSuccess?: () => void;
+  onSubmitSuccess?: (submittedInquiry: InquiryFormData & { representative: string; rawPhone: string }) => void;
 }
 
 export default function RequirementForm({ initialData, onSubmitSuccess }: RequirementFormProps) {
@@ -17,6 +17,7 @@ export default function RequirementForm({ initialData, onSubmitSuccess }: Requir
     message: ''
   });
 
+  const [selectedRepId, setSelectedRepId] = React.useState<string>('desk1');
   const [touched, setTouched] = React.useState<Record<string, boolean>>({});
   const [inquirySent, setInquirySent] = React.useState(false);
 
@@ -50,7 +51,6 @@ export default function RequirementForm({ initialData, onSubmitSuccess }: Requir
     e.preventDefault();
 
     if (!isFormValid()) {
-      // Mark all as touched to trigger error states
       setTouched({
         name: true,
         phone: true,
@@ -60,6 +60,9 @@ export default function RequirementForm({ initialData, onSubmitSuccess }: Requir
       return;
     }
 
+    // Find the representative matching selectedRepId
+    const representative = WHATSAPP_REPRESENTATIVES.find(r => r.id === selectedRepId) || WHATSAPP_REPRESENTATIVES[0];
+
     // Standard requested format:
     // 📌 New Requirement
     // 👤 Name: ${name}
@@ -67,14 +70,14 @@ export default function RequirementForm({ initialData, onSubmitSuccess }: Requir
     // 🏷 Type: ${type}
     // 📍 Location: ${location}
     // 📝 Details: ${message}
-    const text = `📌 New Requirement
+    const text = `📌 New Requirement (Sharma Prop Mart)
 👤 Name: ${formData.name}
 📞 Phone: ${formData.phone}
 🏷 Type: ${formData.type}
 📍 Location: ${formData.location}
 📝 Details: ${formData.message}`;
 
-    const whatsappNumber = OFFICE_CONTACT.rawPhone;
+    const whatsappNumber = representative.raw;
     const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
 
     // Open WhatsApp link in a new tab
@@ -82,8 +85,13 @@ export default function RequirementForm({ initialData, onSubmitSuccess }: Requir
 
     // Action feedback
     setInquirySent(true);
+
     if (onSubmitSuccess) {
-      onSubmitSuccess();
+      onSubmitSuccess({
+        ...formData,
+        representative: representative.name,
+        rawPhone: representative.phone
+      });
     }
   };
 
@@ -99,16 +107,18 @@ export default function RequirementForm({ initialData, onSubmitSuccess }: Requir
     setInquirySent(false);
   };
 
+  const activeRep = WHATSAPP_REPRESENTATIVES.find(r => r.id === selectedRepId) || WHATSAPP_REPRESENTATIVES[0];
+
   return (
     <div className="bg-slate-900 border border-slate-800 rounded-2xl shadow-xl overflow-hidden max-w-xl mx-auto" id="requirement-panel">
       {/* Top Banner accent */}
-      <div className="bg-gradient-to-r from-amber-500 to-amber-600 px-6 py-6 text-slate-950 flex items-center gap-3">
+      <div className="bg-gradient-to-r from-emerald-500 to-emerald-600 px-6 py-6 text-slate-950 flex items-center gap-3">
         <ClipboardList className="w-8 h-8 font-black shrink-0" />
         <div>
-          <h2 className="text-xl font-extrabold tracking-tight">
+          <h2 className="text-xl font-extrabold tracking-tight text-slate-950">
             Submit Requirement Portal
           </h2>
-          <p className="text-xs font-semibold text-slate-900 mt-0.5">
+          <p className="text-xs font-bold text-slate-900 mt-0.5">
             Pre-fills dynamically and forwards directly to Sharma Prop Mart on WhatsApp.
           </p>
         </div>
@@ -123,21 +133,21 @@ export default function RequirementForm({ initialData, onSubmitSuccess }: Requir
             <div className="space-y-2">
               <h3 className="text-xl font-bold text-white">Requirement Prepared!</h3>
               <p className="text-sm text-slate-400 max-w-xs mx-auto">
-                Opening WhatsApp to securely transfer your formatted requirement details to <strong>+91 {OFFICE_CONTACT.rawPhone}</strong>.
+                Opening WhatsApp to securely transfer your formatted requirement details to <strong>{activeRep.name} ({activeRep.phone})</strong>.
               </p>
             </div>
             
             <div className="pt-4 flex justify-center gap-3">
               <button
                 onClick={resetForm}
-                className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-white text-xs font-extrabold tracking-wider uppercase py-2.5 px-4 rounded-lg transition-colors border border-slate-700"
+                className="flex items-center gap-2 bg-slate-850 hover:bg-slate-800 text-white text-xs font-extrabold tracking-wider uppercase py-2.5 px-4 rounded-lg transition-colors border border-slate-800"
               >
                 <RefreshCw className="w-3.5 h-3.5" />
                 <span>Submit Another</span>
               </button>
               <button
                 onClick={handleSendWhatsApp}
-                className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold tracking-wider uppercase py-2.5 px-4 rounded-lg transition-colors"
+                className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold tracking-wider uppercase py-2.5 px-4 rounded-lg transition-colors cursor-pointer"
               >
                 <Send className="w-3.5 h-3.5" />
                 <span>Retry Open Link</span>
@@ -146,6 +156,41 @@ export default function RequirementForm({ initialData, onSubmitSuccess }: Requir
           </div>
         ) : (
           <form onSubmit={handleSendWhatsApp} className="space-y-5">
+            {/* Preferred Representative selection */}
+            <div>
+              <label htmlFor="representative" className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                Route WhatsApp Inquiry To: <span className="text-emerald-400">*</span>
+              </label>
+              <div className="grid grid-cols-1 gap-2.5">
+                {WHATSAPP_REPRESENTATIVES.map((rep) => (
+                  <label
+                    key={rep.id}
+                    onClick={() => setSelectedRepId(rep.id)}
+                    className={`flex items-center justify-between p-3.5 rounded-xl border-2 transition-all cursor-pointer ${
+                      selectedRepId === rep.id
+                        ? 'bg-emerald-500/10 border-emerald-500 text-white'
+                        : 'bg-slate-950 border-slate-850 text-slate-400 hover:text-slate-200'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <input
+                        type="radio"
+                        name="whatsapp_rep"
+                        checked={selectedRepId === rep.id}
+                        onChange={() => setSelectedRepId(rep.id)}
+                        className="accent-emerald-500"
+                      />
+                      <div className="text-left">
+                        <span className="font-extrabold text-xs block text-slate-200">{rep.name}</span>
+                        <span className="text-[10px] text-slate-400 block">{rep.purpose}</span>
+                      </div>
+                    </div>
+                    <span className="font-mono text-xs font-black text-emerald-400">{rep.phone}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+
             {/* Input Name */}
             <div>
               <label htmlFor="name" className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">
@@ -158,7 +203,7 @@ export default function RequirementForm({ initialData, onSubmitSuccess }: Requir
                 onChange={handleChange}
                 onBlur={() => handleBlur('name')}
                 placeholder="Enter your full name"
-                className={`w-full bg-slate-950 border text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent placeholder-slate-600 ${
+                className={`w-full bg-slate-950 border text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent placeholder-slate-600 ${
                   touched.name && !formData.name.trim() 
                     ? 'border-red-500 ring-1 ring-red-500/20' 
                     : 'border-slate-800'
@@ -167,7 +212,7 @@ export default function RequirementForm({ initialData, onSubmitSuccess }: Requir
               />
               {touched.name && !formData.name.trim() && (
                 <p className="text-red-500 text-xs font-medium mt-1.5 flex items-center gap-1">
-                  <AlertCircle className="w-3 H-3" />
+                  <AlertCircle className="w-3 h-3" />
                   Please write your name.
                 </p>
               )}
@@ -190,7 +235,7 @@ export default function RequirementForm({ initialData, onSubmitSuccess }: Requir
                   onBlur={() => handleBlur('phone')}
                   placeholder="Enter 10-digit number"
                   maxLength={12}
-                  className={`w-full bg-slate-950 border text-white rounded-xl pl-14 pr-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent placeholder-slate-600 font-mono ${
+                  className={`w-full bg-slate-950 border text-white rounded-xl pl-14 pr-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent placeholder-slate-600 font-mono ${
                     touched.phone && formData.phone.trim().length < 10 
                       ? 'border-red-500 ring-1 ring-red-500/20' 
                       : 'border-slate-800'
@@ -200,7 +245,7 @@ export default function RequirementForm({ initialData, onSubmitSuccess }: Requir
               </div>
               {touched.phone && formData.phone.trim().length < 10 && (
                 <p className="text-red-500 text-xs font-medium mt-1.5 flex items-center gap-1">
-                  <AlertCircle className="w-3 H-3" />
+                  <AlertCircle className="w-3 h-3" />
                   Please write a valid 10-digit mobile number.
                 </p>
               )}
@@ -215,7 +260,7 @@ export default function RequirementForm({ initialData, onSubmitSuccess }: Requir
                 id="type"
                 value={formData.type}
                 onChange={handleChange}
-                className="w-full bg-slate-950 border border-slate-800 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent font-medium"
+                className="w-full bg-slate-950 border border-slate-800 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent font-medium"
               >
                 <option value="Buy">Buy (Commercial / Residential)</option>
                 <option value="Sell">Sell / Liquidate Asset</option>
@@ -236,7 +281,7 @@ export default function RequirementForm({ initialData, onSubmitSuccess }: Requir
                 onChange={handleChange}
                 onBlur={() => handleBlur('location')}
                 placeholder="e.g. SEC-18 PKT-3, ALPHA-II, Yamuna Expressway"
-                className={`w-full bg-slate-950 border text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent placeholder-slate-600 ${
+                className={`w-full bg-slate-950 border text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent placeholder-slate-600 ${
                   touched.location && !formData.location.trim() 
                     ? 'border-red-500 ring-1 ring-red-500/20' 
                     : 'border-slate-800'
@@ -245,7 +290,7 @@ export default function RequirementForm({ initialData, onSubmitSuccess }: Requir
               />
               {touched.location && !formData.location.trim() && (
                 <p className="text-red-500 text-xs font-medium mt-1.5 flex items-center gap-1">
-                  <AlertCircle className="w-3 H-3" />
+                  <AlertCircle className="w-3 h-3" />
                   Please clarify the location.
                 </p>
               )}
@@ -263,7 +308,7 @@ export default function RequirementForm({ initialData, onSubmitSuccess }: Requir
                 onBlur={() => handleBlur('message')}
                 rows={4}
                 placeholder="Please enter your detailed requirement..."
-                className={`w-full bg-slate-950 border text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent placeholder-slate-600 text-slate-200 ${
+                className={`w-full bg-slate-950 border text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent placeholder-slate-600 text-slate-200 ${
                   touched.message && !formData.message.trim() 
                     ? 'border-red-500 ring-1 ring-red-500/20' 
                     : 'border-slate-800'
@@ -272,7 +317,7 @@ export default function RequirementForm({ initialData, onSubmitSuccess }: Requir
               ></textarea>
               {touched.message && !formData.message.trim() && (
                 <p className="text-red-500 text-xs font-medium mt-1.5 flex items-center gap-1">
-                  <AlertCircle className="w-3 H-3" />
+                  <AlertCircle className="w-3 h-3" />
                   Please provide some detail.
                 </p>
               )}
@@ -284,7 +329,7 @@ export default function RequirementForm({ initialData, onSubmitSuccess }: Requir
               disabled={!isFormValid()}
               className={`w-full text-slate-950 font-extrabold text-sm py-4 px-6 rounded-xl flex items-center justify-center gap-2 cursor-pointer transition-all shadow-md ${
                 isFormValid() 
-                  ? 'bg-emerald-500 hover:bg-emerald-400 hover:shadow-emerald-500/25 text-slate-950' 
+                  ? 'bg-emerald-500 hover:bg-emerald-400 hover:shadow-emerald-500/25 text-slate-950 font-black' 
                   : 'bg-slate-800 text-slate-500 border border-slate-850 cursor-not-allowed'
               }`}
             >

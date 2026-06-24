@@ -96,8 +96,15 @@ export const OFFICE_CONTACT = {
   addressLine1: 'Phase 1 - 166 A Pratap Nagar',
   addressLine2: 'Mayur Vihar Phase-1, New Delhi - 110091',
   detailedAddress: '166 A, 3rd Floor, Above Durbar Restaurant, Pratap Nagar, Mayur Vihar Phase-1, New Delhi - 110091',
-  phone: '+91 9810007204',
-  rawPhone: '9810007204',
+  phone: '+91 81780 97230',
+  rawPhone: '918178097230',
+  phone2: '+91 78387 75327',
+  rawPhone2: '917838775327',
   email: 'sharmagulshan431@gmail.com',
-  whatsappUrlBase: 'https://wa.me/919810007204'
+  whatsappUrlBase: 'https://wa.me/918178097230'
 };
+
+export const WHATSAPP_REPRESENTATIVES = [
+  { id: 'desk1', name: 'Inquiry Desk 1', phone: '+91 81780 97230', raw: '918178097230', purpose: 'Quick Chat & Site Visits' },
+  { id: 'desk2', name: 'Inquiry Desk 2', phone: '+91 78387 75327', raw: '917838775327', purpose: 'Rates & Sell Bookings' }
+];
