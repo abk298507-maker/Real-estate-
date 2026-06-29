@@ -445,11 +445,6 @@ export default function App() {
                     Pratap Nagar, Mayur Vihar Phase-1,<br />
                     New Delhi - 110091
                   </p>
-                  <p className="leading-relaxed text-slate-400 pt-3 border-t border-slate-800">
-                    <strong>Branch Layout Desk:</strong><br />
-                    Phase 1 - 166 A Pratap Nagar,<br />
-                    Mayur Vihar, New Delhi - 110091
-                  </p>
                 </div>
               </div>
 
@@ -543,7 +538,7 @@ export default function App() {
               <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6 space-y-4 z-10">
                 <span className="text-3xl text-slate-500">📍</span>
                 <div className="space-y-1">
-                  <h4 className="text-white font-extrabold text-lg">SHARMA PROPERTIES branch layout</h4>
+                  <h4 className="text-white font-extrabold text-lg">SHARMA PROPERTIES Office</h4>
                   <p className="text-slate-400 text-sm max-w-sm">Mayur Vihar Phase - 1, Above Durbar Restaurant & Near New Delhi metro corridor files</p>
                 </div>
                 <a 

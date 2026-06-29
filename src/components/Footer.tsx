@@ -11,7 +11,7 @@ export default function Footer({ setActiveTab }: FooterProps) {
     <footer className="bg-slate-950 text-slate-400 border-t border-slate-900" id="app-footer">
       {/* Upper Footer section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           {/* Brand & Mission Statement */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
@@ -79,29 +79,6 @@ export default function Footer({ setActiveTab }: FooterProps) {
                 </button>
               </li>
             </ul>
-          </div>
-
-          {/* Detailed Address 1 */}
-          <div>
-            <h4 className="font-bold text-white text-base mb-6 border-l-2 border-emerald-500 pl-3">
-              Office (New Delhi)
-            </h4>
-            <div className="space-y-3.5 text-sm">
-              <div className="flex gap-2.5 items-start">
-                <MapPin className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
-                <p className="leading-relaxed">
-                  <strong>Branch Office:</strong><br />
-                  Phase 1 - 166 A Pratap Nagar,<br />
-                  Mayur Vihar, New Delhi - 110091
-                </p>
-              </div>
-              <div className="flex gap-2.5 items-start pt-1">
-                <Building className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
-                <p className="leading-relaxed text-slate-400 text-xs">
-                  Sharma Prop Mart (Builders & Estimators division of SHARMA PROPERTIES).
-                </p>
-              </div>
-            </div>
           </div>
 
           {/* Address 2 / Corporate Address & Contacts */}
