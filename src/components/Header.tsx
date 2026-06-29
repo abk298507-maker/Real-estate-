@@ -13,6 +13,7 @@ export default function Header({ activeTab, setActiveTab }: HeaderProps) {
 
   const navItems: { id: ActiveTab; label: string }[] = [
     { id: 'home', label: 'Home' },
+    { id: 'categories', label: 'All Categories 🔍' },
     { id: 'yamuna', label: 'Yamuna Expressway' },
     { id: 'noida', label: 'Greater Noida' },
     { id: 'inquiry', label: 'Post Requirement' },

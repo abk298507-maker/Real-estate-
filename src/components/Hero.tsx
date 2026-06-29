@@ -186,6 +186,16 @@ export default function Hero({ setActiveTab, setQuickSearch, setQuickType }: Her
                 <ArrowRight className="w-4 h-4" />
               </button>
             </form>
+
+            <div className="mt-4 text-center border-t border-slate-800/40 pt-4">
+              <button 
+                onClick={() => setActiveTab('categories')}
+                className="text-xs font-bold text-emerald-400 hover:text-emerald-300 hover:underline inline-flex items-center gap-1 cursor-pointer"
+              >
+                <span>🔍 Or explore all 40+ property categories</span>
+                <ArrowRight className="w-3 h-3" />
+              </button>
+            </div>
           </div>
         </div>
 

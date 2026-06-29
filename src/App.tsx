@@ -14,6 +14,7 @@ import Hero from './components/Hero';
 import PropertyTable from './components/PropertyTable';
 import RequirementForm from './components/RequirementForm';
 import AdminPanel from './components/AdminPanel';
+import AllCategories from './components/AllCategories';
 import { 
   Phone, 
   MessageSquare, 
@@ -376,6 +377,16 @@ export default function App() {
                 </div>
               </div>
             </section>
+          </div>
+        )}
+
+        {/* VIEW: ALL CATEGORIES HUB */}
+        {activeTab === 'categories' && (
+          <div className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <AllCategories 
+              setActiveTab={setActiveTab}
+              setQuickSearch={setQuickSearch}
+            />
           </div>
         )}
 

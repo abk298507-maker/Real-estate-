@@ -19,4 +19,4 @@ export interface InquiryFormData {
   message: string;
 }
 
-export type ActiveTab = 'home' | 'yamuna' | 'noida' | 'inquiry' | 'contact' | 'admin';
+export type ActiveTab = 'home' | 'categories' | 'yamuna' | 'noida' | 'inquiry' | 'contact' | 'admin';
