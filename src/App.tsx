@@ -32,7 +32,15 @@ import {
   Building2,
   ChevronRight,
   Sparkles,
-  ShieldCheck as ShieldIcon
+  ShieldCheck as ShieldIcon,
+  Calculator,
+  FileText,
+  Percent,
+  Eye,
+  Users,
+  Scale,
+  FileSignature,
+  FolderLock
 } from 'lucide-react';
 
 export default function App() {
@@ -100,6 +108,7 @@ export default function App() {
   });
 
   const [notification, setNotification] = React.useState<string | null>(null);
+  const [servicesSection, setServicesSection] = React.useState<'tools' | 'vas' | 'crm' | 'builder'>('tools');
 
   // Auto-scroll when switching views
   React.useEffect(() => {
@@ -251,6 +260,235 @@ export default function App() {
               </div>
             </div>
 
+            {/* SHARMA PROP MART DIGITAL SERVICES & TOOLS ECOSYSTEM */}
+            <section className="bg-gradient-to-b from-slate-900 to-slate-950 rounded-3xl p-8 sm:p-12 border border-slate-800/80 space-y-10 relative overflow-hidden">
+              <div className="absolute top-0 right-0 bg-emerald-500/10 px-4 py-2 rounded-bl-3xl border-l border-b border-emerald-500/20 text-xs font-black tracking-wider text-emerald-400 uppercase">
+                ⚡ SPM Premium Suite
+              </div>
+
+              <div className="max-w-3xl space-y-4">
+                <span className="text-xs font-black tracking-widest text-emerald-500 uppercase bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">
+                  Value Added Features
+                </span>
+                <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                  Sharma Prop Mart Digital Services & Tools
+                </h2>
+                <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+                  Avoid physical legal disputes and paperwork headaches. Launch instant real-estate calculators, online registry drafts, tenant screening tools, and live builder catalogs verified directly with regulatory authorities.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {/* 1. Property Valuation */}
+                <div 
+                  onClick={() => {
+                    setServicesSection('tools');
+                    setActiveTab('services');
+                  }}
+                  className="bg-slate-950/80 border border-slate-850 hover:border-emerald-500/40 p-6 rounded-2xl group transition-all cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:shadow-emerald-950/20"
+                >
+                  <div className="bg-emerald-500/10 w-12 h-12 rounded-xl flex items-center justify-center text-emerald-400 mb-5 group-hover:bg-emerald-500 group-hover:text-slate-950 transition-all duration-200">
+                    <Calculator className="w-6 h-6" />
+                  </div>
+                  <span className="text-[9px] font-black tracking-widest text-emerald-500 uppercase bg-emerald-500/5 px-2 py-0.5 rounded-md border border-emerald-500/10 mb-2 inline-block">
+                    SMART TOOL
+                  </span>
+                  <h3 className="font-extrabold text-white text-base group-hover:text-emerald-400 transition-colors">
+                    Property Valuation
+                  </h3>
+                  <p className="text-slate-400 text-xs mt-2 line-clamp-2">
+                    Enter plot sector, size, and face values to calculate the actual government standard registry and circle rates.
+                  </p>
+                  <div className="mt-4 flex items-center gap-1 text-xs font-bold text-emerald-500">
+                    <span>Calculate Now</span>
+                    <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </div>
+
+                {/* 2. E-Stamp Rent Agreement */}
+                <div 
+                  onClick={() => {
+                    setServicesSection('vas');
+                    setActiveTab('services');
+                  }}
+                  className="bg-slate-950/80 border border-slate-850 hover:border-emerald-500/40 p-6 rounded-2xl group transition-all cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:shadow-emerald-950/20"
+                >
+                  <div className="bg-emerald-500/10 w-12 h-12 rounded-xl flex items-center justify-center text-emerald-400 mb-5 group-hover:bg-emerald-500 group-hover:text-slate-950 transition-all duration-200">
+                    <FileSignature className="w-6 h-6" />
+                  </div>
+                  <span className="text-[9px] font-black tracking-widest text-emerald-500 uppercase bg-emerald-500/5 px-2 py-0.5 rounded-md border border-emerald-500/10 mb-2 inline-block">
+                    ONLINE DRAFT
+                  </span>
+                  <h3 className="font-extrabold text-white text-base group-hover:text-emerald-400 transition-colors">
+                    Rent Agreement
+                  </h3>
+                  <p className="text-slate-400 text-xs mt-2 line-clamp-2">
+                    Draft legally sound digital rent agreements instantly with customizable clauses, secure stamp e-printing & OTP.
+                  </p>
+                  <div className="mt-4 flex items-center gap-1 text-xs font-bold text-emerald-500">
+                    <span>Draft Instantly</span>
+                    <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </div>
+
+                {/* 3. Home Loan eligibility */}
+                <div 
+                  onClick={() => {
+                    setServicesSection('vas');
+                    setActiveTab('services');
+                  }}
+                  className="bg-slate-950/80 border border-slate-850 hover:border-emerald-500/40 p-6 rounded-2xl group transition-all cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:shadow-emerald-950/20"
+                >
+                  <div className="bg-emerald-500/10 w-12 h-12 rounded-xl flex items-center justify-center text-emerald-400 mb-5 group-hover:bg-emerald-500 group-hover:text-slate-950 transition-all duration-200">
+                    <Percent className="w-6 h-6" />
+                  </div>
+                  <span className="text-[9px] font-black tracking-widest text-emerald-500 uppercase bg-emerald-500/5 px-2 py-0.5 rounded-md border border-emerald-500/10 mb-2 inline-block">
+                    INTEGRATED BANKING
+                  </span>
+                  <h3 className="font-extrabold text-white text-base group-hover:text-emerald-400 transition-colors">
+                    Home Loan Check
+                  </h3>
+                  <p className="text-slate-400 text-xs mt-2 line-clamp-2">
+                    Check eligibility scores, pre-calculated interest margins, and easily apply to partnered banks like SBI & HDFC.
+                  </p>
+                  <div className="mt-4 flex items-center gap-1 text-xs font-bold text-emerald-500">
+                    <span>Check Eligibility</span>
+                    <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </div>
+
+                {/* 4. Builder Microsites & Spotlight */}
+                <div 
+                  onClick={() => {
+                    setServicesSection('builder');
+                    setActiveTab('services');
+                  }}
+                  className="bg-slate-950/80 border border-slate-850 hover:border-emerald-500/40 p-6 rounded-2xl group transition-all cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:shadow-emerald-950/20"
+                >
+                  <div className="bg-emerald-500/10 w-12 h-12 rounded-xl flex items-center justify-center text-emerald-400 mb-5 group-hover:bg-emerald-500 group-hover:text-slate-950 transition-all duration-200">
+                    <Eye className="w-6 h-6" />
+                  </div>
+                  <span className="text-[9px] font-black tracking-widest text-amber-500 uppercase bg-amber-500/5 px-2 py-0.5 rounded-md border border-amber-500/10 mb-2 inline-block">
+                    EXCLUSIVE LAUNCH
+                  </span>
+                  <h3 className="font-extrabold text-white text-base group-hover:text-emerald-400 transition-colors">
+                    Builder Microsites
+                  </h3>
+                  <p className="text-slate-400 text-xs mt-2 line-clamp-2">
+                    Experience interactive projects by Godrej & DLF, complete with virtual walk tours, floorplans, and direct WhatsApp booking.
+                  </p>
+                  <div className="mt-4 flex items-center gap-1 text-xs font-bold text-emerald-500">
+                    <span>Virtual Walkthrough</span>
+                    <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </div>
+
+                {/* 5. Locality Insights & Ratings */}
+                <div 
+                  onClick={() => {
+                    setServicesSection('tools');
+                    setActiveTab('services');
+                  }}
+                  className="bg-slate-950/80 border border-slate-850 hover:border-emerald-500/40 p-6 rounded-2xl group transition-all cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:shadow-emerald-950/20"
+                >
+                  <div className="bg-emerald-500/10 w-12 h-12 rounded-xl flex items-center justify-center text-emerald-400 mb-5 group-hover:bg-emerald-500 group-hover:text-slate-950 transition-all duration-200">
+                    <MapPin className="w-6 h-6" />
+                  </div>
+                  <span className="text-[9px] font-black tracking-widest text-emerald-500 uppercase bg-emerald-500/5 px-2 py-0.5 rounded-md border border-emerald-500/10 mb-2 inline-block">
+                    LOCALITY STATS
+                  </span>
+                  <h3 className="font-extrabold text-white text-base group-hover:text-emerald-400 transition-colors">
+                    Locality Insights
+                  </h3>
+                  <p className="text-slate-400 text-xs mt-2 line-clamp-2">
+                    Access distance reviews, public transport ratings, healthcare hubs, and local educational proximity scoring.
+                  </p>
+                  <div className="mt-4 flex items-center gap-1 text-xs font-bold text-emerald-500">
+                    <span>Read Insights</span>
+                    <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </div>
+
+                {/* 6. Legal & RERA Advisory */}
+                <div 
+                  onClick={() => {
+                    setServicesSection('vas');
+                    setActiveTab('services');
+                  }}
+                  className="bg-slate-950/80 border border-slate-850 hover:border-emerald-500/40 p-6 rounded-2xl group transition-all cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:shadow-emerald-950/20"
+                >
+                  <div className="bg-emerald-500/10 w-12 h-12 rounded-xl flex items-center justify-center text-emerald-400 mb-5 group-hover:bg-emerald-500 group-hover:text-slate-950 transition-all duration-200">
+                    <Scale className="w-6 h-6" />
+                  </div>
+                  <span className="text-[9px] font-black tracking-widest text-emerald-500 uppercase bg-emerald-500/5 px-2 py-0.5 rounded-md border border-emerald-500/10 mb-2 inline-block">
+                    VERIFIED COMPLIANCE
+                  </span>
+                  <h3 className="font-extrabold text-white text-base group-hover:text-emerald-400 transition-colors">
+                    Legal & RERA Advisor
+                  </h3>
+                  <p className="text-slate-400 text-xs mt-2 line-clamp-2">
+                    Submit documents to trace regulatory registrations, verify title deed clearances, and review official land allotments.
+                  </p>
+                  <div className="mt-4 flex items-center gap-1 text-xs font-bold text-emerald-500">
+                    <span>Review Titles</span>
+                    <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </div>
+
+                {/* 7. Tenant Background Check */}
+                <div 
+                  onClick={() => {
+                    setServicesSection('vas');
+                    setActiveTab('services');
+                  }}
+                  className="bg-slate-950/80 border border-slate-850 hover:border-emerald-500/40 p-6 rounded-2xl group transition-all cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:shadow-emerald-950/20"
+                >
+                  <div className="bg-emerald-500/10 w-12 h-12 rounded-xl flex items-center justify-center text-emerald-400 mb-5 group-hover:bg-emerald-500 group-hover:text-slate-950 transition-all duration-200">
+                    <FolderLock className="w-6 h-6" />
+                  </div>
+                  <span className="text-[9px] font-black tracking-widest text-emerald-500 uppercase bg-emerald-500/5 px-2 py-0.5 rounded-md border border-emerald-500/10 mb-2 inline-block">
+                    POLICE VERIFIED
+                  </span>
+                  <h3 className="font-extrabold text-white text-base group-hover:text-emerald-400 transition-colors">
+                    Tenant Verification
+                  </h3>
+                  <p className="text-slate-400 text-xs mt-2 line-clamp-2">
+                    Protect your property. Access background verification forms, identity checks, and formal police notification drafts.
+                  </p>
+                  <div className="mt-4 flex items-center gap-1 text-xs font-bold text-emerald-500">
+                    <span>Request Screening</span>
+                    <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </div>
+
+                {/* 8. Agent / Broker Console */}
+                <div 
+                  onClick={() => {
+                    setServicesSection('crm');
+                    setActiveTab('services');
+                  }}
+                  className="bg-slate-950/80 border border-slate-850 hover:border-emerald-500/40 p-6 rounded-2xl group transition-all cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:shadow-emerald-950/20"
+                >
+                  <div className="bg-emerald-500/10 w-12 h-12 rounded-xl flex items-center justify-center text-emerald-400 mb-5 group-hover:bg-emerald-500 group-hover:text-slate-950 transition-all duration-200">
+                    <Users className="w-6 h-6" />
+                  </div>
+                  <span className="text-[9px] font-black tracking-widest text-emerald-500 uppercase bg-emerald-500/5 px-2 py-0.5 rounded-md border border-emerald-500/10 mb-2 inline-block">
+                    BROKER CONTROL
+                  </span>
+                  <h3 className="font-extrabold text-white text-base group-hover:text-emerald-400 transition-colors">
+                    Broker CRM Dashboard
+                  </h3>
+                  <p className="text-slate-400 text-xs mt-2 line-clamp-2">
+                    Manage active clients, monitor real-time contact leads, track customer clicks, and update property deal states instantly.
+                  </p>
+                  <div className="mt-4 flex items-center gap-1 text-xs font-bold text-emerald-500">
+                    <span>Manage Leads</span>
+                    <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </div>
+              </div>
+            </section>
+
             {/* SERVICES CARD WORKSPACE */}
             <section id="services-component" className="space-y-12">
               <div className="text-center space-y-4">
@@ -397,6 +635,8 @@ export default function App() {
             <PremiumServices 
               setActiveTab={setActiveTab}
               setQuickSearch={setQuickSearch}
+              activeSection={servicesSection}
+              setActiveSection={setServicesSection}
             />
           </div>
         )}

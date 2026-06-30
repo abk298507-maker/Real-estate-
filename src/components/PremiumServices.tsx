@@ -41,13 +41,22 @@ import { PropertyItem, ActiveTab } from '../types';
 interface PremiumServicesProps {
   setActiveTab: (tab: ActiveTab) => void;
   setQuickSearch: (query: string) => void;
+  activeSection?: 'tools' | 'vas' | 'crm' | 'builder';
+  setActiveSection?: (section: 'tools' | 'vas' | 'crm' | 'builder') => void;
 }
 
 // Sub-tabs for the Services Workspace
 type ServiceSection = 'tools' | 'vas' | 'crm' | 'builder';
 
-export default function PremiumServices({ setActiveTab, setQuickSearch }: PremiumServicesProps) {
-  const [activeSection, setActiveSection] = React.useState<ServiceSection>('tools');
+export default function PremiumServices({ 
+  setActiveTab, 
+  setQuickSearch, 
+  activeSection: propsActiveSection, 
+  setActiveSection: propsSetActiveSection 
+}: PremiumServicesProps) {
+  const [localActiveSection, setLocalActiveSection] = React.useState<ServiceSection>('tools');
+  const activeSection = propsActiveSection || localActiveSection;
+  const setActiveSection = propsSetActiveSection || setLocalActiveSection;
   const [toastMessage, setToastMessage] = React.useState<string | null>(null);
 
   const showToast = (message: string) => {
