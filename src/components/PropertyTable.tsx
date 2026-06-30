@@ -1,6 +1,6 @@
 import React from 'react';
 import { PropertyItem } from '../types';
-import { Search, Info, CheckCircle, ArrowRight, CircleDot, HelpCircle } from 'lucide-react';
+import { Search, Info, CheckCircle, ArrowRight, CircleDot, HelpCircle, Heart, Eye } from 'lucide-react';
 
 interface PropertyTableProps {
   region: 'Yamuna Expressway' | 'Greater Noida';
@@ -30,6 +30,40 @@ export default function PropertyTable({
 }: PropertyTableProps) {
   const [searchTerm, setSearchTerm] = React.useState(searchFilter);
   const [selectedBlock, setSelectedBlock] = React.useState<string>('All');
+  
+  // Real-time activity tracking inspired by 99acres screenshots
+  const [shortlisted, setShortlisted] = React.useState<number[]>(() => {
+    const saved = localStorage.getItem('sharma_shortlisted_properties');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  const toggleShortlist = (id: number, e: React.MouseEvent) => {
+    e.stopPropagation();
+    let updated;
+    if (shortlisted.includes(id)) {
+      updated = shortlisted.filter(item => item !== id);
+    } else {
+      updated = [...shortlisted, id];
+    }
+    setShortlisted(updated);
+    localStorage.setItem('sharma_shortlisted_properties', JSON.stringify(updated));
+  };
+
+  const trackView = (id: number) => {
+    const viewed = JSON.parse(localStorage.getItem('spm_viewed_properties') || '[]');
+    if (!viewed.includes(id)) {
+      const updated = [...viewed, id];
+      localStorage.setItem('spm_viewed_properties', JSON.stringify(updated));
+    }
+  };
+
+  const trackContact = (id: number) => {
+    const contacted = JSON.parse(localStorage.getItem('sharma_contacted_properties') || '[]');
+    if (!contacted.includes(id)) {
+      const updated = [...contacted, id];
+      localStorage.setItem('sharma_contacted_properties', JSON.stringify(updated));
+    }
+  };
 
   // Sync state if prop changes (e.g. from hero input)
   React.useEffect(() => {
@@ -168,7 +202,9 @@ export default function PropertyTable({
                 return (
                   <tr 
                     key={item.id} 
-                    className="hover:bg-slate-850/50 transition-colors group"
+                    className="hover:bg-slate-850/50 transition-colors group cursor-pointer"
+                    onMouseEnter={() => trackView(item.id)}
+                    onClick={() => trackView(item.id)}
                   >
                     {/* Serial Number */}
                     <td className="py-4 px-6 text-center font-mono text-sm text-slate-500 group-hover:text-slate-300">
@@ -258,12 +294,28 @@ export default function PropertyTable({
                       </span>
                     </td>
 
-                    {/* Buy / Sell / Rent buttons */}
-                    <td className="py-4 px-6 text-right">
-                      <div className="flex items-center justify-end gap-2.5">
+                    {/* Buy / Sell / Rent buttons with Heart shortlist */}
+                    <td className="py-4 px-6 text-right" onClick={(e) => e.stopPropagation()}>
+                      <div className="flex items-center justify-end gap-2">
+                        {/* Heart icon bookmark shortlist */}
+                        <button
+                          onClick={(e) => toggleShortlist(item.id, e)}
+                          className={`p-2 rounded-lg border transition-all cursor-pointer ${
+                            shortlisted.includes(item.id)
+                              ? 'bg-red-500/10 border-red-500/30 text-red-500'
+                              : 'bg-slate-950 border-slate-800 text-slate-500 hover:text-slate-300 hover:border-slate-700'
+                          }`}
+                          title={shortlisted.includes(item.id) ? 'Remove Shortlist' : 'Shortlist Property'}
+                        >
+                          <Heart className={`w-4 h-4 ${shortlisted.includes(item.id) ? 'fill-red-500 text-red-500' : ''}`} />
+                        </button>
+
                         {showBuy && (
                           <button
-                            onClick={() => onActionClick('Buy', item)}
+                            onClick={() => {
+                              trackContact(item.id);
+                              onActionClick('Buy', item);
+                            }}
                             className="bg-emerald-600/10 hover:bg-emerald-600 border border-emerald-500/20 hover:border-emerald-500 text-emerald-400 hover:text-white px-3 sm:px-4 py-1.5 rounded-lg text-xs font-bold tracking-wider uppercase transition-all flex items-center gap-1 cursor-pointer transform active:scale-95 duration-700"
                             title={`Inquire about buying property in ${item.sector}`}
                           >
@@ -272,7 +324,10 @@ export default function PropertyTable({
                         )}
                         {showSell && (
                           <button
-                            onClick={() => onActionClick('Sell', item)}
+                            onClick={() => {
+                              trackContact(item.id);
+                              onActionClick('Sell', item);
+                            }}
                             className="bg-red-650/10 hover:bg-red-600 border border-red-500/20 hover:border-red-500 text-red-400 hover:text-white px-3 sm:px-4 py-1.5 rounded-lg text-xs font-bold tracking-wider uppercase transition-all flex items-center gap-1 cursor-pointer transform active:scale-95 duration-700"
                             title={`Inquire about selling property in ${item.sector}`}
                           >
@@ -281,7 +336,10 @@ export default function PropertyTable({
                         )}
                         {showRent && (
                           <button
-                            onClick={() => onActionClick('Rent', item)}
+                            onClick={() => {
+                              trackContact(item.id);
+                              onActionClick('Rent', item);
+                            }}
                             className="bg-blue-600/10 hover:bg-blue-600 border border-blue-500/20 hover:border-blue-500 text-blue-400 hover:text-white px-3 sm:px-4 py-1.5 rounded-lg text-xs font-bold tracking-wider uppercase transition-all flex items-center gap-1 cursor-pointer transform active:scale-95 duration-700"
                             title={`Inquire about renting property in ${item.sector}`}
                           >

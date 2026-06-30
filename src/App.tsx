@@ -16,6 +16,7 @@ import RequirementForm from './components/RequirementForm';
 import AdminPanel from './components/AdminPanel';
 import AllCategories from './components/AllCategories';
 import PremiumServices from './components/PremiumServices';
+import { UserProfileDrawer, PostPropertyWizard, StuckInFormPopup } from './components/My99AcresServices';
 import { 
   Phone, 
   MessageSquare, 
@@ -40,7 +41,8 @@ import {
   Users,
   Scale,
   FileSignature,
-  FolderLock
+  FolderLock,
+  X
 } from 'lucide-react';
 
 export default function App() {
@@ -109,6 +111,25 @@ export default function App() {
 
   const [notification, setNotification] = React.useState<string | null>(null);
   const [servicesSection, setServicesSection] = React.useState<'tools' | 'vas' | 'crm' | 'builder'>('tools');
+
+  // User Profile Drawer and stuck modal state
+  const [isProfileOpen, setIsProfileOpen] = React.useState(false);
+  const [isPostPropertyOpen, setIsPostPropertyOpen] = React.useState(false);
+  const [isStuckModalOpen, setIsStuckModalOpen] = React.useState(false);
+
+  const handlePropertyCreated = (newItem: Omit<PropertyItem, 'id'>) => {
+    const nextId = allListings.length > 0 ? Math.max(...allListings.map(l => l.id)) + 1 : 1;
+    const added: PropertyItem = {
+      ...newItem,
+      id: nextId
+    };
+    const updated = [added, ...allListings];
+    setAllListings(updated);
+    localStorage.setItem('sharma_prop_listings', JSON.stringify(updated));
+    setNotification('Property listed successfully! Available in database.');
+    setIsPostPropertyOpen(false);
+    setTimeout(() => setNotification(null), 4000);
+  };
 
   // Auto-scroll when switching views
   React.useEffect(() => {
@@ -197,7 +218,11 @@ export default function App() {
       )}
 
       {/* Modern Sticky Navigation */}
-      <Header activeTab={activeTab} setActiveTab={setActiveTab} />
+      <Header 
+        activeTab={activeTab} 
+        setActiveTab={setActiveTab} 
+        onOpenProfile={() => setIsProfileOpen(true)} 
+      />
 
       {/* Hero Section displayed on Homepage */}
       {activeTab === 'home' && (
@@ -850,6 +875,71 @@ export default function App() {
       >
         <MessageSquare className="w-7 h-7 fill-white stroke-0" />
       </a>
+
+      {/* User Activity & Role Profiles Drawer */}
+      <UserProfileDrawer 
+        isOpen={isProfileOpen} 
+        onClose={() => setIsProfileOpen(false)} 
+        allListings={allListings}
+        setActiveTab={(tab) => {
+          setActiveTab(tab as any);
+          setIsProfileOpen(false);
+        }}
+        triggerPostProperty={() => {
+          setIsProfileOpen(false);
+          setIsPostPropertyOpen(true);
+        }}
+      />
+
+      {/* Post Property Multi-Step Wizard popup */}
+      {isPostPropertyOpen && (
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto animate-in fade-in duration-200">
+          <div className="bg-slate-900 border border-slate-800 rounded-3xl w-full max-w-4xl max-h-[90vh] overflow-y-auto relative shadow-2xl p-2 sm:p-4">
+            <button 
+              onClick={() => setIsPostPropertyOpen(false)}
+              className="absolute top-4 right-4 text-slate-400 hover:text-white p-2 hover:bg-slate-800 rounded-full transition-colors z-20 cursor-pointer"
+              title="Close Panel"
+            >
+              <X className="w-5 h-5" />
+            </button>
+            <PostPropertyWizard 
+              onPropertyCreated={handlePropertyCreated}
+              triggerStuckModal={() => setIsStuckModalOpen(true)}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Anti-stuck intelligent lead backup helper */}
+      <StuckInFormPopup 
+        isOpen={isStuckModalOpen}
+        onClose={() => setIsStuckModalOpen(false)}
+        onSubmit={(phone) => {
+          // add callback or log to inquiries
+          const newInq = {
+            id: 'inq_stuck_' + Date.now(),
+            name: 'Stuck Lead User',
+            phone: phone,
+            type: 'Buy' as const,
+            location: 'Yamuna Expressway',
+            message: 'User got stuck while filling form or posting property. Requested callback immediately.',
+            date: new Date().toLocaleString('en-IN', {
+              day: '2-digit',
+              month: 'short',
+              year: 'numeric',
+              hour: '2-digit',
+              minute: '2-digit',
+              hour12: true
+            }),
+            status: 'New' as const
+          };
+          const updated = [newInq, ...inquiries];
+          setInquiries(updated);
+          localStorage.setItem('sharma_prop_inquiries', JSON.stringify(updated));
+          setNotification('Callback registered. Our representative will contact you.');
+          setTimeout(() => setNotification(null), 4000);
+        }}
+      />
     </div>
   );
 }

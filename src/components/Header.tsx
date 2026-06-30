@@ -1,14 +1,15 @@
 import React from 'react';
 import { ActiveTab } from '../types';
-import { Phone, MessageSquare, Menu, X, Landmark, ShieldCheck } from 'lucide-react';
+import { Phone, MessageSquare, Menu, X, Landmark, ShieldCheck, User } from 'lucide-react';
 import { OFFICE_CONTACT } from '../data';
 
 interface HeaderProps {
   activeTab: ActiveTab;
   setActiveTab: (tab: ActiveTab) => void;
+  onOpenProfile: () => void;
 }
 
-export default function Header({ activeTab, setActiveTab }: HeaderProps) {
+export default function Header({ activeTab, setActiveTab, onOpenProfile }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
 
   const navItems: { id: ActiveTab; label: string }[] = [
@@ -70,6 +71,14 @@ export default function Header({ activeTab, setActiveTab }: HeaderProps) {
 
           {/* Call-to-Actions */}
           <div className="hidden lg:flex items-center gap-4" id="header-cta">
+            <button
+              onClick={onOpenProfile}
+              className="flex items-center gap-2 bg-slate-800 hover:bg-slate-750 text-emerald-400 border border-slate-700 hover:border-emerald-500/30 px-3.5 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition-all cursor-pointer"
+              title="My 99Acres Search Activity"
+            >
+              <User className="w-4 h-4 fill-emerald-400/10" />
+              <span>My Activity</span>
+            </button>
             <a
               href={`tel:${OFFICE_CONTACT.phone}`}
               className="flex items-center gap-2 text-slate-300 hover:text-emerald-400 font-medium text-sm transition-colors"
@@ -92,6 +101,13 @@ export default function Header({ activeTab, setActiveTab }: HeaderProps) {
 
           {/* Mobile Menu Buttons */}
           <div className="md:hidden flex items-center gap-3">
+            <button
+              onClick={onOpenProfile}
+              className="bg-slate-800 p-2 rounded-lg text-emerald-400 border border-slate-700"
+              title="My Activity"
+            >
+              <User className="w-4 h-4" />
+            </button>
             <a
               href={`https://wa.me/${OFFICE_CONTACT.rawPhone2}?text=Hello%20I%20need%20property%20details`}
               className="bg-emerald-600 p-2.5 rounded-lg text-white"

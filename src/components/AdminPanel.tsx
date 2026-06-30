@@ -3,8 +3,9 @@ import { PropertyItem, InquiryFormData } from '../types';
 import { OFFICE_CONTACT, WHATSAPP_REPRESENTATIVES } from '../data';
 import { 
   ShieldCheck, Lock, Unlock, Plus, Edit2, Trash2, CheckCircle2, 
-  Trash, Save, X, Phone, Clipboard, Building2, Eye, FileText, Check, AlertCircle, RefreshCw
+  Trash, Save, X, Phone, Clipboard, Building2, Eye, FileText, Check, AlertCircle, RefreshCw, Users
 } from 'lucide-react';
+import { MasterBrokerRoster } from './My99AcresServices';
 
 interface AdminPanelProps {
   listings: PropertyItem[];
@@ -28,7 +29,7 @@ export default function AdminPanel({
   const [errorMsg, setErrorMsg] = React.useState('');
 
   // Active sub-tab inside Admin Panel
-  const [adminTab, setAdminTab] = React.useState<'properties' | 'inquiries' | 'whatsapp'>('properties');
+  const [adminTab, setAdminTab] = React.useState<'properties' | 'inquiries' | 'whatsapp' | 'brokers'>('properties');
 
   // Editing state for properties
   const [editingPropertyId, setEditingPropertyId] = React.useState<number | null>(null);
@@ -47,6 +48,34 @@ export default function AdminPanel({
   // Editing state for active helpline numbers
   const [editingContactId, setEditingContactId] = React.useState<string | null>(null);
   const [editContactVal, setEditContactVal] = React.useState({ name: '', phone: '', raw: '', purpose: '' });
+
+  // Load Brokers roster for Lead Assignment
+  const brokersList = React.useMemo(() => {
+    const saved = localStorage.getItem('sharma_brokers_roster');
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (e) {
+        console.error(e);
+      }
+    }
+    return [
+      { id: 'b1', name: 'Ravi Sharma', phone: '+91 98123 45678', specialization: 'Yamuna Authority Plots', activeLeadsCount: 4 },
+      { id: 'b2', name: 'Anil Kumar', phone: '+91 81780 97230', specialization: 'Greater Noida West Flats', activeLeadsCount: 2 },
+      { id: 'b3', name: 'Sanjay Dutt', phone: '+91 99990 12345', specialization: 'Commercial Shops & Showrooms', activeLeadsCount: 5 }
+    ];
+  }, [adminTab]);
+
+  const handleAssignBroker = (id: string, brokerName: string) => {
+    const updated = inquiries.map(inq => {
+      if (inq.id === id) {
+        return { ...inq, assignedBroker: brokerName };
+      }
+      return inq;
+    });
+    setInquiries(updated as any);
+    localStorage.setItem('sharma_prop_inquiries', JSON.stringify(updated));
+  };
 
   // Handle passcode auth (Simulated login)
   const handleLogin = (e: React.FormEvent) => {
@@ -326,6 +355,18 @@ export default function AdminPanel({
         >
           <Phone className="w-4 h-4" />
           <span>WhatsApp Chat Settings</span>
+        </button>
+
+        <button
+          onClick={() => setAdminTab('brokers')}
+          className={`py-3 px-5 font-bold text-sm border-b-2 transition-all flex items-center gap-2 ${
+            adminTab === 'brokers'
+              ? 'border-emerald-500 text-emerald-400 bg-slate-900/40 rounded-t-lg'
+              : 'border-transparent text-slate-400 hover:text-slate-200'
+          }`}
+        >
+          <Users className="w-4 h-4 text-amber-400" />
+          <span>Master Broker Roster 👑</span>
         </button>
       </div>
 
@@ -754,6 +795,23 @@ export default function AdminPanel({
                     </p>
                   </div>
 
+                  {/* Assign Broker dropdown */}
+                  <div className="bg-slate-950 border border-slate-850 p-2.5 rounded-xl flex items-center justify-between text-xs gap-2">
+                    <span className="text-[10px] text-slate-400 font-bold uppercase">Assign Broker:</span>
+                    <select
+                      value={(inq as any).assignedBroker || ''}
+                      onChange={(e) => handleAssignBroker(inq.id, e.target.value)}
+                      className="bg-slate-900 border border-slate-800 text-slate-200 text-xs rounded px-2.5 py-1 focus:outline-none"
+                    >
+                      <option value="">Unassigned</option>
+                      {brokersList.map((b: any) => (
+                        <option key={b.id} value={b.name}>
+                          {b.name} ({b.specialization.split(' ')[0]})
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
                   {/* Actions to update progress status */}
                   <div className="flex gap-2 pt-2 justify-end">
                     <button
@@ -894,6 +952,11 @@ export default function AdminPanel({
             })}
           </div>
         </div>
+      )}
+
+      {/* SUBTAB 4: MASTER AGENTS / BROKERS ROSTER */}
+      {adminTab === 'brokers' && (
+        <MasterBrokerRoster />
       )}
     </div>
   );
