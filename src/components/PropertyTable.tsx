@@ -131,11 +131,20 @@ export default function PropertyTable({
       <div className="bg-gradient-to-r from-slate-900 via-slate-950 to-slate-900 px-6 py-8 border-b border-slate-800/60">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
-            <h2 className="text-2xl font-extrabold text-white tracking-tight">
-              {region}: Property Listings
-            </h2>
+            <div className="flex items-center gap-2 mb-1.5 flex-wrap">
+              <h2 className="text-2xl font-extrabold text-white tracking-tight">
+                {region}: Property Listings
+              </h2>
+              {region === 'Greater Noida' && (
+                <span className="text-[10px] font-black uppercase tracking-widest bg-red-500/10 text-red-400 px-2.5 py-0.5 rounded border border-red-500/20 animate-pulse">
+                  ⚡ 99Acres Live Feed — Posted Today
+                </span>
+              )}
+            </div>
             <p className="text-sm text-slate-400 mt-1">
-              Select Sector details to browse and send precise buy/sell requirements on WhatsApp.
+              {region === 'Greater Noida' 
+                ? 'Full sector-wise property listings posted today for Buy & Sell. Available in English language with direct contact numbers.'
+                : 'Select Sector details to browse and send precise buy/sell requirements on WhatsApp.'}
             </p>
           </div>
 
@@ -234,8 +243,18 @@ export default function PropertyTable({
 
                     {/* Sector & Details */}
                     <td className="py-4 px-6">
-                      <div className="font-extrabold text-slate-200 group-hover:text-white transition-colors flex items-center gap-2">
+                      <div className="font-extrabold text-slate-200 group-hover:text-white transition-colors flex flex-wrap items-center gap-2">
                         <span>{highlightText(item.sector, searchTerm)}</span>
+                        {item.beds && (
+                          <span className="text-[10px] font-bold uppercase tracking-wider bg-slate-800 text-slate-300 px-1.5 py-0.5 rounded border border-slate-700">
+                            {item.beds}
+                          </span>
+                        )}
+                        {item.postedDate && (
+                          <span className="text-[9px] font-black uppercase tracking-wider bg-red-500/10 text-red-400 px-1.5 py-0.5 rounded border border-red-500/20 animate-pulse">
+                            🔥 {item.postedDate}
+                          </span>
+                        )}
                         {item.sector.includes('SEC-20') && (
                           <span className="text-[10px] font-black uppercase tracking-wider bg-orange-500/10 text-orange-400 px-1.5 py-0.5 rounded border border-orange-500/10">
                             Premium Wide Lane
@@ -250,6 +269,34 @@ export default function PropertyTable({
                       <div className="text-xs text-slate-400 mt-1 max-w-sm line-clamp-1 group-hover:line-clamp-none transition-all">
                         {item.details}
                       </div>
+
+                      {(item.contactNumber || item.agentName) && (
+                        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-2 text-[11px] text-slate-400 font-mono">
+                          {item.agentName && (
+                            <span className="flex items-center gap-1">
+                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping shrink-0" />
+                              <span>Agent: <strong className="text-slate-300">{item.agentName}</strong></span>
+                            </span>
+                          )}
+                          {item.contactNumber && (
+                            <span className="flex items-center gap-1.5">
+                              <span className="text-slate-500">☎</span>
+                              <span>Contact: <a href={`tel:${item.contactNumber}`} className="text-emerald-400 hover:underline font-bold" onClick={(e) => e.stopPropagation()}>{item.contactNumber}</a></span>
+                            </span>
+                          )}
+                          {item.contactNumber && (
+                            <a 
+                              href={`https://wa.me/${item.contactNumber.replace(/[^0-9]/g, '')}?text=Hello%20I%20am%20interested%20in%20property%20listing%20at%20${encodeURIComponent(item.sector)}%20for%20${item.purpose || 'Sale'}`}
+                              target="_blank"
+                              referrerPolicy="no-referrer"
+                              onClick={(e) => e.stopPropagation()}
+                              className="text-[10px] bg-emerald-500/10 hover:bg-emerald-500 text-emerald-400 hover:text-slate-950 border border-emerald-500/20 hover:border-emerald-500 px-1.5 py-0.2 rounded font-black uppercase tracking-wider transition-all"
+                            >
+                              Direct WhatsApp
+                            </a>
+                          )}
+                        </div>
+                      )}
                     </td>
 
                     {/* Blocks */}

@@ -16,6 +16,7 @@ import RequirementForm from './components/RequirementForm';
 import AdminPanel from './components/AdminPanel';
 import AllCategories from './components/AllCategories';
 import PremiumServices from './components/PremiumServices';
+import SearchSimulator from './components/SearchSimulator';
 import { UserProfileDrawer, PostPropertyWizard, StuckInFormPopup } from './components/My99AcresServices';
 import { 
   Phone, 
@@ -42,7 +43,11 @@ import {
   Scale,
   FileSignature,
   FolderLock,
-  X
+  X,
+  Star,
+  Flame,
+  ArrowUpRight,
+  TrendingUp
 } from 'lucide-react';
 
 export default function App() {
@@ -55,7 +60,14 @@ export default function App() {
     const saved = localStorage.getItem('sharma_prop_listings');
     if (saved) {
       try {
-        return JSON.parse(saved);
+        const parsed = JSON.parse(saved);
+        // If they have older/obsolete format without the rich Greater Noida data (e.g. no item with contactNumber)
+        const hasOldFormat = parsed.some((item: any) => item.region === 'Greater Noida' && !item.contactNumber);
+        if (hasOldFormat) {
+          localStorage.removeItem('sharma_prop_listings');
+        } else {
+          return parsed;
+        }
       } catch (e) {
         console.error('Failed to load listings', e);
       }
@@ -641,6 +653,282 @@ export default function App() {
                 </div>
               </div>
             </section>
+
+            {/* SECTION: HOT LOCALITIES */}
+            <section className="space-y-8" id="hot-localities-section">
+              <div className="text-center space-y-3">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-red-500/10 text-red-400 border border-red-500/20 rounded-full text-xs font-bold tracking-wider uppercase">
+                  <Flame className="w-3.5 h-3.5 fill-red-500/20" />
+                  <span>Greater Noida & Yamuna Hotbeds</span>
+                </div>
+                <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                  Premium High-Demand Localities
+                </h2>
+                <p className="text-slate-400 text-sm max-w-2xl mx-auto">
+                  Based on live registration queries and investor transaction volumes over the last 90 days. Click any card to instantly filter properties.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {[
+                  {
+                    sector: 'Sector 18',
+                    zone: 'Yamuna Expressway',
+                    tab: 'yamuna',
+                    query: 'SEC-18',
+                    buyers: '120+ Active Buyers',
+                    growth: '+15.4% YoY',
+                    circleRate: '₹55,000 / sq.m.',
+                    advantage: 'Immediate Yamuna Authority allotment & pocket parks'
+                  },
+                  {
+                    sector: 'Sector 20',
+                    zone: 'Yamuna Expressway',
+                    tab: 'yamuna',
+                    query: 'SEC-20',
+                    buyers: '95+ Active Buyers',
+                    growth: '+12.8% YoY',
+                    circleRate: '₹52,000 / sq.m.',
+                    advantage: 'Large scale plots with rapid industrial highway corridor links'
+                  },
+                  {
+                    sector: 'Alpha-I',
+                    zone: 'Greater Noida',
+                    tab: 'noida',
+                    query: 'ALPHA-I',
+                    buyers: '140+ Active Buyers',
+                    growth: '+10.2% YoY',
+                    circleRate: '₹85,000 / sq.m.',
+                    advantage: 'Highly established, near active Commercial hubs & metro'
+                  },
+                  {
+                    sector: 'Swarn Nagari',
+                    zone: 'Greater Noida',
+                    tab: 'noida',
+                    query: 'SWARN NAGARI',
+                    buyers: '80+ Active Buyers',
+                    growth: '+11.5% YoY',
+                    circleRate: '₹95,000 / sq.m.',
+                    advantage: 'Ultra-exclusive residential layout with elite villa layouts'
+                  }
+                ].map((loc, idx) => (
+                  <div
+                    key={idx}
+                    onClick={() => {
+                      setQuickSearch(loc.query);
+                      setQuickType('Buy');
+                      setActiveTab(loc.tab as any);
+                    }}
+                    className="bg-slate-900 border border-slate-800 hover:border-red-500/40 p-6 rounded-2xl group transition-all cursor-pointer hover:-translate-y-1.5 duration-200 relative overflow-hidden flex flex-col justify-between"
+                  >
+                    <div className="absolute top-0 right-0 w-24 h-24 bg-red-500/5 rounded-bl-full group-hover:bg-red-500/10 transition-colors pointer-events-none" />
+                    
+                    <div className="space-y-4">
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <span className="text-[10px] font-extrabold text-red-400 bg-red-400/10 px-2 py-0.5 rounded border border-red-400/20 block w-max">
+                            {loc.zone}
+                          </span>
+                          <h3 className="text-xl font-extrabold text-white mt-2 group-hover:text-red-400 transition-colors">
+                            {loc.sector}
+                          </h3>
+                        </div>
+                        <ArrowUpRight className="w-5 h-5 text-slate-500 group-hover:text-red-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                      </div>
+
+                      <div className="space-y-1 text-xs">
+                        <div className="flex justify-between text-slate-400">
+                          <span>Market Interest:</span>
+                          <span className="text-white font-bold">{loc.buyers}</span>
+                        </div>
+                        <div className="flex justify-between text-slate-400">
+                          <span>Appreciation:</span>
+                          <span className="text-emerald-400 font-bold">{loc.growth}</span>
+                        </div>
+                        <div className="flex justify-between text-slate-400">
+                          <span>Avg Circle Rate:</span>
+                          <span className="text-red-400 font-bold">{loc.circleRate}</span>
+                        </div>
+                      </div>
+
+                      <p className="text-slate-400 text-xs leading-relaxed pt-2 border-t border-slate-850">
+                        {loc.advantage}
+                      </p>
+                    </div>
+
+                    <div className="mt-4 text-[11px] font-bold text-red-400 flex items-center gap-1">
+                      <span>View Sectors Listing</span>
+                      <ChevronRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* SECTION: PRICE TRENDS */}
+            <section className="bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800/80 rounded-3xl p-8 sm:p-12 space-y-8 relative overflow-hidden" id="price-trends-section">
+              <div className="absolute top-0 right-0 w-72 h-72 bg-gradient-to-br from-emerald-500/5 to-transparent rounded-full blur-2xl pointer-events-none" />
+              
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div className="lg:col-span-5 space-y-4">
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-full text-xs font-bold tracking-wider uppercase">
+                    <TrendingUp className="w-3.5 h-3.5" />
+                    <span>Real-time Appraisals</span>
+                  </div>
+                  <h2 className="text-3xl font-extrabold text-white tracking-tight leading-tight">
+                    Average Price Trends & Circle Rates
+                  </h2>
+                  <p className="text-slate-300 text-sm leading-relaxed">
+                    Compare circle rates set by Noida Authorities against premium market transaction rates. Track high-velocity residential growth parameters across different asset configurations.
+                  </p>
+                  <div className="pt-4 border-t border-slate-850 text-xs text-slate-400 space-y-2">
+                    <p className="flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                      <span>Yamuna Expressway average premium appreciation: <strong>+12.4% YoY</strong></span>
+                    </p>
+                    <p className="flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                      <span>Greater Noida Core sectors appreciation: <strong>+10.2% YoY</strong></span>
+                    </p>
+                  </div>
+                </div>
+
+                <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {[
+                    {
+                      category: 'Yamuna Authority Plots',
+                      size: 'Standard 300 Sq. Mtr.',
+                      priceRange: '₹1.20 Cr - ₹2.35 Cr',
+                      demand: 'Very High',
+                      trend: '+15.4% YoY',
+                      color: 'emerald'
+                    },
+                    {
+                      category: 'Greater Noida West Flats',
+                      size: 'Luxury 3 BHK Residentials',
+                      priceRange: '₹85 Lakh - ₹1.70 Cr',
+                      demand: 'High Stability',
+                      trend: '+8.6% YoY',
+                      color: 'amber'
+                    },
+                    {
+                      category: 'Commercial Shops',
+                      size: 'Premium Retail Outlets',
+                      priceRange: '₹50 Lakh - ₹2.50 Cr',
+                      demand: 'Steady Cashflow',
+                      trend: '+11.2% YoY',
+                      color: 'emerald'
+                    },
+                    {
+                      category: 'Industrial / Institutional',
+                      size: 'Greater Noida Green Belt',
+                      priceRange: 'On Request',
+                      demand: 'Highly Selective',
+                      trend: 'Contact Gulshan',
+                      color: 'slate'
+                    }
+                  ].map((trend, idx) => (
+                    <div
+                      key={idx}
+                      className="bg-slate-950 border border-slate-850 p-5 rounded-xl space-y-3 relative hover:border-slate-700 transition-colors"
+                    >
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <h4 className="font-extrabold text-white text-sm">{trend.category}</h4>
+                          <p className="text-[11px] text-slate-400">{trend.size}</p>
+                        </div>
+                        <span className={`text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded ${
+                          trend.color === 'emerald' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' :
+                          trend.color === 'amber' ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20' :
+                          'bg-slate-800 text-slate-400 border border-slate-700'
+                        }`}>
+                          {trend.trend}
+                        </span>
+                      </div>
+
+                      <div className="pt-2 border-t border-slate-850 flex justify-between items-center text-xs">
+                        <span className="text-slate-400">Avg Market Rate:</span>
+                        <span className="text-white font-extrabold">{trend.priceRange}</span>
+                      </div>
+                      <div className="flex justify-between items-center text-[10px]">
+                        <span className="text-slate-500">Investor Demand Index:</span>
+                        <span className="text-emerald-400 font-bold">{trend.demand}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+            {/* SECTION: TESTIMONIALS */}
+            <section className="space-y-8" id="testimonials-section">
+              <div className="text-center space-y-3">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded-full text-xs font-bold tracking-wider uppercase">
+                  <Star className="w-3.5 h-3.5 fill-amber-500/20" />
+                  <span>Real Customer Feedback</span>
+                </div>
+                <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                  What Our Valued Investors Say
+                </h2>
+                <p className="text-slate-400 text-sm max-w-2xl mx-auto">
+                  Over 15+ years of delivering uncompromised legal verification and physical site allotment support across New Delhi, Greater Noida & Yamuna Expressway.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {[
+                  {
+                    name: 'Rajinder Prasad',
+                    role: 'Retired Government Officer',
+                    location: 'Mayur Vihar, Delhi',
+                    quote: 'We bought a 300 Mtr plot in Yamuna Expressway Sector 18 through Sharma Prop Mart. The entire documentation, from allotment checks to registry filing, was handled cleanly without any hassle. Highly recommended!',
+                    initials: 'RP'
+                  },
+                  {
+                    name: 'Anjali Singhal',
+                    role: 'IT Consultant & Investor',
+                    location: 'Greater Noida West',
+                    quote: 'Direct, transparent dealing without aggressive markups is their biggest USP. I sold my Greater Noida Sector flat within 2 weeks at a very fair market price. Extremely professional and humble staff!',
+                    initials: 'AS'
+                  },
+                  {
+                    name: 'Devender Rawat',
+                    role: 'Business Owner',
+                    location: 'Indirapuram, Ghaziabad',
+                    quote: 'Outstanding construction support in Sigma-II. They built our residential villa exactly on schedule, keeping RERA standards in mind and utilizing certified, premium quality building materials throughout.',
+                    initials: 'DR'
+                  }
+                ].map((test, idx) => (
+                  <div
+                    key={idx}
+                    className="bg-slate-900 border border-slate-800/80 p-6 rounded-2xl flex flex-col justify-between space-y-6 hover:border-slate-700 transition-colors"
+                  >
+                    <div className="space-y-4">
+                      {/* Star indicators */}
+                      <div className="flex gap-1 text-amber-400">
+                        {[...Array(5)].map((_, si) => (
+                          <Star key={si} className="w-4 h-4 fill-amber-400 stroke-0" />
+                        ))}
+                      </div>
+
+                      <p className="text-slate-300 text-xs sm:text-sm italic leading-relaxed">
+                        "{test.quote}"
+                      </p>
+                    </div>
+
+                    <div className="flex items-center gap-3 pt-4 border-t border-slate-850">
+                      <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-emerald-500 to-red-500 text-slate-950 font-extrabold flex items-center justify-center text-sm">
+                        {test.initials}
+                      </div>
+                      <div>
+                        <h4 className="font-extrabold text-white text-xs sm:text-sm">{test.name}</h4>
+                        <p className="text-[11px] text-slate-400">{test.role} • {test.location}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
           </div>
         )}
 
@@ -687,6 +975,13 @@ export default function App() {
               onActionClick={handlePropertyRowAction}
               searchFilter={quickSearch}
             />
+          </div>
+        )}
+
+        {/* VIEW: SEO RANK CHECKER & SEARCH SIMULATOR */}
+        {activeTab === 'seo' && (
+          <div className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <SearchSimulator />
           </div>
         )}
 

@@ -421,7 +421,27 @@ export default function PremiumServices({
           SECTION 1: DATA & SMART TOOLS
          ---------------------------------------------------- */}
       {activeSection === 'tools' && (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 animate-in fade-in duration-300">
+        <div className="space-y-8 animate-in fade-in duration-300">
+          {/* SEO Rank Teaser */}
+          <div className="bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 p-6 rounded-3xl border border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div className="space-y-1 text-center sm:text-left">
+              <span className="text-[10px] font-black tracking-widest bg-emerald-500/15 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded-full uppercase">
+                Search Ranking Active
+              </span>
+              <h4 className="text-white font-extrabold text-lg">Bing & Google SEO Index Simulator</h4>
+              <p className="text-xs text-slate-400 max-w-xl">
+                Type queries like <strong className="text-emerald-400">"greater noida property SALL"</strong> to check how your website sharmapropmart.com ranks at the top organic positions with optimized metatags.
+              </p>
+            </div>
+            <button
+              onClick={() => setActiveTab('seo')}
+              className="px-5 py-3 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-xs rounded-xl uppercase tracking-wider transition-all cursor-pointer whitespace-nowrap"
+            >
+              Open SERP Tool 💻
+            </button>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           
           {/* Valuation Calculator: left col (lg:6) */}
           <div className="lg:col-span-7 bg-slate-950/80 border border-slate-800 rounded-3xl p-6 sm:p-8 space-y-6">
@@ -695,6 +715,7 @@ export default function PremiumServices({
             </div>
 
           </div>
+        </div>
         </div>
       )}
 

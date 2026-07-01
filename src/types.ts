@@ -9,6 +9,10 @@ export interface PropertyItem {
   price?: string; // Optional price (e.g. ₹ 1.2 Cr, ₹ 45 Lakhs, etc.)
   photoUrl?: string; // Property photograph URL
   purpose?: 'Buy' | 'Sell' | 'Rent' | 'Both'; // Listing category/purpose options
+  contactNumber?: string; // Contact phone number for this listing
+  postedDate?: string; // Post timestamp, e.g. "Posted Today", "2 hrs ago"
+  beds?: string; // e.g. "3 BHK", "Plot", "Commercial"
+  agentName?: string; // Associated handling agent
 }
 
 export interface InquiryFormData {
@@ -19,4 +23,4 @@ export interface InquiryFormData {
   message: string;
 }
 
-export type ActiveTab = 'home' | 'categories' | 'services' | 'yamuna' | 'noida' | 'inquiry' | 'contact' | 'admin';
+export type ActiveTab = 'home' | 'categories' | 'services' | 'yamuna' | 'noida' | 'inquiry' | 'contact' | 'admin' | 'seo';

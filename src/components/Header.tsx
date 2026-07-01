@@ -21,6 +21,7 @@ export default function Header({ activeTab, setActiveTab, onOpenProfile }: Heade
     { id: 'inquiry', label: 'Post Requirement' },
     { id: 'contact', label: 'Contact Us' },
     { id: 'admin', label: 'Admin Desk ⚙️' },
+    { id: 'seo', label: 'SEO Rank Checker 💻' },
   ];
 
   const handleTabClick = (tabId: ActiveTab) => {
