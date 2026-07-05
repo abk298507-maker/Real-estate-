@@ -220,7 +220,17 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 font-sans flex flex-col justify-between text-slate-100" id="app-root-container">
+    <div 
+      className="min-h-screen font-sans flex flex-col justify-between text-slate-100 relative bg-slate-950" 
+      id="app-root-container"
+      style={{
+        backgroundImage: "linear-gradient(to bottom, rgba(2, 6, 23, 0.94), rgba(2, 6, 23, 0.94)), url('https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=2000')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundAttachment: "fixed",
+        backgroundRepeat: "no-repeat"
+      }}
+    >
       {/* Dynamic Temporary Alert Notice */}
       {notification && (
         <div className="fixed top-24 right-5 z-50 bg-emerald-500 text-slate-950 px-5 py-3 rounded-xl shadow-2xl flex items-center gap-2 text-sm font-extrabold animate-bounce border border-white/20">

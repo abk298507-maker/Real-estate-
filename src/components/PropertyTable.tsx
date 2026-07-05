@@ -197,7 +197,7 @@ export default function PropertyTable({
               {region === 'Yamuna Expressway' && (
                 <th className="py-4 px-6 text-center">Standard Size</th>
               )}
-              <th className="py-4 px-6 text-center">Price Estimate</th>
+              <th className="py-4 px-6 text-center">Call Option / Price</th>
               <th className="py-4 px-6 text-right w-56">Action Actionable</th>
             </tr>
           </thead>
@@ -334,11 +334,19 @@ export default function PropertyTable({
                       </td>
                     )}
 
-                    {/* Price Estimate */}
-                    <td className="py-4 px-6 text-center">
-                      <span className="font-extrabold text-emerald-400 font-mono tracking-tight">
-                        {item.price || 'Call for Price'}
-                      </span>
+                    {/* Price Estimate / Call Option */}
+                    <td className="py-4 px-6 text-center" onClick={(e) => e.stopPropagation()}>
+                      <div className="flex flex-col items-center gap-1.5 justify-center">
+                        <a 
+                          href={`tel:${item.contactNumber || '+91 81780 97230'}`}
+                          className="inline-flex items-center gap-1 bg-[#12cf64] hover:bg-[#10b857] text-white font-black px-3.5 py-1.5 rounded-xl text-xs shadow-md shadow-emerald-500/10 hover:shadow-emerald-500/20 transition-all hover:scale-105 active:scale-95 duration-150 cursor-pointer"
+                        >
+                          <span className="animate-pulse">📞</span> Call Now
+                        </a>
+                        <span className="text-[10px] text-slate-400 font-mono font-extrabold tracking-tight">
+                          {item.price || 'Call for Price'}
+                        </span>
+                      </div>
                     </td>
 
                     {/* Buy / Sell / Rent buttons with Heart shortlist */}
