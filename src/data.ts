@@ -531,35 +531,27 @@ export const GREATER_NOIDA_LISTINGS: PropertyItem[] = [
 export const SERVICES = [
   {
     id: 'buy',
-    icon: 'Home',
+    icon: '🏠',
     title: 'Property Buy',
-    short: 'Residential & Commercial Property Available.',
-    description: 'Find your dream home or a profitable business space. We offer prime residential plots, luxury villas, modern apartments, and premium commercial retail shops/offices in Greater Noida and Yamuna Expressway regions.',
-    benefits: ['Verified Titles & Clear Documents', 'Prime Locations with High Appreciation', 'Authority-Approved Safe Plots', 'Excellent Rental Yield Potential']
+    short: 'Residential & Commercial Properties Available.',
+    description: 'Residential & Commercial Properties Available.',
+    benefits: []
   },
   {
     id: 'sell',
-    icon: 'TrendingUp',
+    icon: '🏢',
     title: 'Property Sell',
     short: 'Sell Property At Best Market Rates.',
-    description: 'Get the absolute maximum return on your real estate investments. Our active network of investors and transparent valuation process guarantees rapid, stress-free property sales at high market prices.',
-    benefits: ['Zero Aggressive Commission Markups', 'Direct Selling to Genuine Handpicked Buyers', 'Accurate, Evidence-Based Valuation', 'End-to-End Legal & Registration Work']
+    description: 'Sell Property At Best Market Rates.',
+    benefits: []
   },
   {
     id: 'rent',
-    icon: 'Key',
+    icon: '🔑',
     title: 'Property Rent',
     short: 'Flats, Shops & Offices Available.',
-    description: 'Looking to rent? We connect corporate executives, businesses, and families with rental properties. Find fully-furnished and semi-furnished apartments, corporate office spaces, and retail shops.',
-    benefits: ['Speedy Matchmaking & Verification', 'Flexible & Standard Lease Agreements', 'Budget-Optimized Rental Solutions', 'Prime Commuting-Friendly Locations']
-  },
-  {
-    id: 'build',
-    icon: 'Hammer',
-    title: 'Construction',
-    short: 'House & Building Construction Services.',
-    description: 'Build your dream structure with peace of mind. From architectural blueprint mapping to premium building material supply and master craftsmanship, our construction division handles everything.',
-    benefits: ['Premium Certified Building Material', 'Highly Experienced Structural Engineers', 'Timely Project Delivery Guarantee', 'Affordable Project Cost Calculation']
+    description: 'Flats, Shops & Offices Available.',
+    benefits: []
   }
 ];
 

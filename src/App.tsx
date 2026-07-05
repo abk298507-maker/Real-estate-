@@ -297,360 +297,84 @@ export default function App() {
               </div>
             </div>
 
-            {/* SHARMA PROP MART DIGITAL SERVICES & TOOLS ECOSYSTEM */}
-            <section className="bg-gradient-to-b from-slate-900 to-slate-950 rounded-3xl p-8 sm:p-12 border border-slate-800/80 space-y-10 relative overflow-hidden">
-              <div className="absolute top-0 right-0 bg-emerald-500/10 px-4 py-2 rounded-bl-3xl border-l border-b border-emerald-500/20 text-xs font-black tracking-wider text-emerald-400 uppercase">
-                ⚡ SPM Premium Suite
-              </div>
-
-              <div className="max-w-3xl space-y-4">
-                <span className="text-xs font-black tracking-widest text-emerald-500 uppercase bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">
-                  Value Added Features
-                </span>
-                <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-                  Sharma Prop Mart Digital Services & Tools
-                </h2>
-                <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
-                  Avoid physical legal disputes and paperwork headaches. Launch instant real-estate calculators, online registry drafts, tenant screening tools, and live builder catalogs verified directly with regulatory authorities.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                {/* 1. Property Valuation */}
-                <div 
-                  onClick={() => {
-                    setServicesSection('tools');
-                    setActiveTab('services');
-                  }}
-                  className="bg-slate-950/80 border border-slate-850 hover:border-emerald-500/40 p-6 rounded-2xl group transition-all cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:shadow-emerald-950/20"
-                >
-                  <div className="bg-emerald-500/10 w-12 h-12 rounded-xl flex items-center justify-center text-emerald-400 mb-5 group-hover:bg-emerald-500 group-hover:text-slate-950 transition-all duration-200">
-                    <Calculator className="w-6 h-6" />
-                  </div>
-                  <span className="text-[9px] font-black tracking-widest text-emerald-500 uppercase bg-emerald-500/5 px-2 py-0.5 rounded-md border border-emerald-500/10 mb-2 inline-block">
-                    SMART TOOL
-                  </span>
-                  <h3 className="font-extrabold text-white text-base group-hover:text-emerald-400 transition-colors">
-                    Property Valuation
-                  </h3>
-                  <p className="text-slate-400 text-xs mt-2 line-clamp-2">
-                    Enter plot sector, size, and face values to calculate the actual government standard registry and circle rates.
-                  </p>
-                  <div className="mt-4 flex items-center gap-1 text-xs font-bold text-emerald-500">
-                    <span>Calculate Now</span>
-                    <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
-                  </div>
-                </div>
-
-                {/* 2. E-Stamp Rent Agreement */}
-                <div 
-                  onClick={() => {
-                    setServicesSection('vas');
-                    setActiveTab('services');
-                  }}
-                  className="bg-slate-950/80 border border-slate-850 hover:border-emerald-500/40 p-6 rounded-2xl group transition-all cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:shadow-emerald-950/20"
-                >
-                  <div className="bg-emerald-500/10 w-12 h-12 rounded-xl flex items-center justify-center text-emerald-400 mb-5 group-hover:bg-emerald-500 group-hover:text-slate-950 transition-all duration-200">
-                    <FileSignature className="w-6 h-6" />
-                  </div>
-                  <span className="text-[9px] font-black tracking-widest text-emerald-500 uppercase bg-emerald-500/5 px-2 py-0.5 rounded-md border border-emerald-500/10 mb-2 inline-block">
-                    ONLINE DRAFT
-                  </span>
-                  <h3 className="font-extrabold text-white text-base group-hover:text-emerald-400 transition-colors">
-                    Rent Agreement
-                  </h3>
-                  <p className="text-slate-400 text-xs mt-2 line-clamp-2">
-                    Draft legally sound digital rent agreements instantly with customizable clauses, secure stamp e-printing & OTP.
-                  </p>
-                  <div className="mt-4 flex items-center gap-1 text-xs font-bold text-emerald-500">
-                    <span>Draft Instantly</span>
-                    <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
-                  </div>
-                </div>
-
-                {/* 3. Home Loan eligibility */}
-                <div 
-                  onClick={() => {
-                    setServicesSection('vas');
-                    setActiveTab('services');
-                  }}
-                  className="bg-slate-950/80 border border-slate-850 hover:border-emerald-500/40 p-6 rounded-2xl group transition-all cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:shadow-emerald-950/20"
-                >
-                  <div className="bg-emerald-500/10 w-12 h-12 rounded-xl flex items-center justify-center text-emerald-400 mb-5 group-hover:bg-emerald-500 group-hover:text-slate-950 transition-all duration-200">
-                    <Percent className="w-6 h-6" />
-                  </div>
-                  <span className="text-[9px] font-black tracking-widest text-emerald-500 uppercase bg-emerald-500/5 px-2 py-0.5 rounded-md border border-emerald-500/10 mb-2 inline-block">
-                    INTEGRATED BANKING
-                  </span>
-                  <h3 className="font-extrabold text-white text-base group-hover:text-emerald-400 transition-colors">
-                    Home Loan Check
-                  </h3>
-                  <p className="text-slate-400 text-xs mt-2 line-clamp-2">
-                    Check eligibility scores, pre-calculated interest margins, and easily apply to partnered banks like SBI & HDFC.
-                  </p>
-                  <div className="mt-4 flex items-center gap-1 text-xs font-bold text-emerald-500">
-                    <span>Check Eligibility</span>
-                    <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
-                  </div>
-                </div>
-
-                {/* 4. Builder Microsites & Spotlight */}
-                <div 
-                  onClick={() => {
-                    setServicesSection('builder');
-                    setActiveTab('services');
-                  }}
-                  className="bg-slate-950/80 border border-slate-850 hover:border-emerald-500/40 p-6 rounded-2xl group transition-all cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:shadow-emerald-950/20"
-                >
-                  <div className="bg-emerald-500/10 w-12 h-12 rounded-xl flex items-center justify-center text-emerald-400 mb-5 group-hover:bg-emerald-500 group-hover:text-slate-950 transition-all duration-200">
-                    <Eye className="w-6 h-6" />
-                  </div>
-                  <span className="text-[9px] font-black tracking-widest text-amber-500 uppercase bg-amber-500/5 px-2 py-0.5 rounded-md border border-amber-500/10 mb-2 inline-block">
-                    EXCLUSIVE LAUNCH
-                  </span>
-                  <h3 className="font-extrabold text-white text-base group-hover:text-emerald-400 transition-colors">
-                    Builder Microsites
-                  </h3>
-                  <p className="text-slate-400 text-xs mt-2 line-clamp-2">
-                    Experience interactive projects by Godrej & DLF, complete with virtual walk tours, floorplans, and direct WhatsApp booking.
-                  </p>
-                  <div className="mt-4 flex items-center gap-1 text-xs font-bold text-emerald-500">
-                    <span>Virtual Walkthrough</span>
-                    <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
-                  </div>
-                </div>
-
-                {/* 5. Locality Insights & Ratings */}
-                <div 
-                  onClick={() => {
-                    setServicesSection('tools');
-                    setActiveTab('services');
-                  }}
-                  className="bg-slate-950/80 border border-slate-850 hover:border-emerald-500/40 p-6 rounded-2xl group transition-all cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:shadow-emerald-950/20"
-                >
-                  <div className="bg-emerald-500/10 w-12 h-12 rounded-xl flex items-center justify-center text-emerald-400 mb-5 group-hover:bg-emerald-500 group-hover:text-slate-950 transition-all duration-200">
-                    <MapPin className="w-6 h-6" />
-                  </div>
-                  <span className="text-[9px] font-black tracking-widest text-emerald-500 uppercase bg-emerald-500/5 px-2 py-0.5 rounded-md border border-emerald-500/10 mb-2 inline-block">
-                    LOCALITY STATS
-                  </span>
-                  <h3 className="font-extrabold text-white text-base group-hover:text-emerald-400 transition-colors">
-                    Locality Insights
-                  </h3>
-                  <p className="text-slate-400 text-xs mt-2 line-clamp-2">
-                    Access distance reviews, public transport ratings, healthcare hubs, and local educational proximity scoring.
-                  </p>
-                  <div className="mt-4 flex items-center gap-1 text-xs font-bold text-emerald-500">
-                    <span>Read Insights</span>
-                    <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
-                  </div>
-                </div>
-
-                {/* 6. Legal & RERA Advisory */}
-                <div 
-                  onClick={() => {
-                    setServicesSection('vas');
-                    setActiveTab('services');
-                  }}
-                  className="bg-slate-950/80 border border-slate-850 hover:border-emerald-500/40 p-6 rounded-2xl group transition-all cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:shadow-emerald-950/20"
-                >
-                  <div className="bg-emerald-500/10 w-12 h-12 rounded-xl flex items-center justify-center text-emerald-400 mb-5 group-hover:bg-emerald-500 group-hover:text-slate-950 transition-all duration-200">
-                    <Scale className="w-6 h-6" />
-                  </div>
-                  <span className="text-[9px] font-black tracking-widest text-emerald-500 uppercase bg-emerald-500/5 px-2 py-0.5 rounded-md border border-emerald-500/10 mb-2 inline-block">
-                    VERIFIED COMPLIANCE
-                  </span>
-                  <h3 className="font-extrabold text-white text-base group-hover:text-emerald-400 transition-colors">
-                    Legal & RERA Advisor
-                  </h3>
-                  <p className="text-slate-400 text-xs mt-2 line-clamp-2">
-                    Submit documents to trace regulatory registrations, verify title deed clearances, and review official land allotments.
-                  </p>
-                  <div className="mt-4 flex items-center gap-1 text-xs font-bold text-emerald-500">
-                    <span>Review Titles</span>
-                    <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
-                  </div>
-                </div>
-
-                {/* 7. Tenant Background Check */}
-                <div 
-                  onClick={() => {
-                    setServicesSection('vas');
-                    setActiveTab('services');
-                  }}
-                  className="bg-slate-950/80 border border-slate-850 hover:border-emerald-500/40 p-6 rounded-2xl group transition-all cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:shadow-emerald-950/20"
-                >
-                  <div className="bg-emerald-500/10 w-12 h-12 rounded-xl flex items-center justify-center text-emerald-400 mb-5 group-hover:bg-emerald-500 group-hover:text-slate-950 transition-all duration-200">
-                    <FolderLock className="w-6 h-6" />
-                  </div>
-                  <span className="text-[9px] font-black tracking-widest text-emerald-500 uppercase bg-emerald-500/5 px-2 py-0.5 rounded-md border border-emerald-500/10 mb-2 inline-block">
-                    POLICE VERIFIED
-                  </span>
-                  <h3 className="font-extrabold text-white text-base group-hover:text-emerald-400 transition-colors">
-                    Tenant Verification
-                  </h3>
-                  <p className="text-slate-400 text-xs mt-2 line-clamp-2">
-                    Protect your property. Access background verification forms, identity checks, and formal police notification drafts.
-                  </p>
-                  <div className="mt-4 flex items-center gap-1 text-xs font-bold text-emerald-500">
-                    <span>Request Screening</span>
-                    <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
-                  </div>
-                </div>
-
-                {/* 8. Agent / Broker Console */}
-                <div 
-                  onClick={() => {
-                    setServicesSection('crm');
-                    setActiveTab('services');
-                  }}
-                  className="bg-slate-950/80 border border-slate-850 hover:border-emerald-500/40 p-6 rounded-2xl group transition-all cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:shadow-emerald-950/20"
-                >
-                  <div className="bg-emerald-500/10 w-12 h-12 rounded-xl flex items-center justify-center text-emerald-400 mb-5 group-hover:bg-emerald-500 group-hover:text-slate-950 transition-all duration-200">
-                    <Users className="w-6 h-6" />
-                  </div>
-                  <span className="text-[9px] font-black tracking-widest text-emerald-500 uppercase bg-emerald-500/5 px-2 py-0.5 rounded-md border border-emerald-500/10 mb-2 inline-block">
-                    BROKER CONTROL
-                  </span>
-                  <h3 className="font-extrabold text-white text-base group-hover:text-emerald-400 transition-colors">
-                    Broker CRM Dashboard
-                  </h3>
-                  <p className="text-slate-400 text-xs mt-2 line-clamp-2">
-                    Manage active clients, monitor real-time contact leads, track customer clicks, and update property deal states instantly.
-                  </p>
-                  <div className="mt-4 flex items-center gap-1 text-xs font-bold text-emerald-500">
-                    <span>Manage Leads</span>
-                    <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
-                  </div>
-                </div>
-              </div>
-            </section>
-
             {/* SERVICES CARD WORKSPACE */}
-            <section id="services-component" className="space-y-12">
-              <div className="text-center space-y-4">
-                <span className="text-xs font-black tracking-widest text-emerald-500 uppercase bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">
-                  Expert Capabilities
-                </span>
+            <section id="services-component" className="space-y-8">
+              <div className="text-center">
                 <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-                  Our Exclusive Real Estate Services
+                  Our Services
                 </h2>
-                <p className="text-slate-400 text-sm max-w-xl mx-auto">
-                  Providing full-cycle property solutions including physical visits, verification audits, premium construction estimates, and legal transfers.
-                </p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
                 {SERVICES.map((serv) => (
                   <div 
                     key={serv.id}
-                    className="bg-slate-900 border border-slate-800/80 rounded-2xl p-6 flex flex-col justify-between hover:border-emerald-500/30 transition-all group hover:-translate-y-1 duration-250 shadow-lg"
+                    onClick={() => handleServiceCardClick(serv.id as any)}
+                    className="bg-white rounded-[2rem] p-8 flex flex-col items-center justify-center text-center shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer border border-slate-100 group"
                   >
-                    <div className="space-y-4">
-                      {/* Emoji Icon Badge */}
-                      <div className="bg-slate-950 w-12 h-12 flex items-center justify-center rounded-xl border border-slate-850 group-hover:bg-emerald-500 group-hover:text-slate-950 transition-colors text-2xl">
-                        {serv.id === 'buy' && '🏠'}
-                        {serv.id === 'sell' && '🏢'}
-                        {serv.id === 'rent' && '🔑'}
-                        {serv.id === 'build' && '🏗'}
-                      </div>
-
-                      <div className="space-y-1">
-                        <h3 className="font-extrabold text-white text-lg group-hover:text-emerald-400 transition-colors">
-                          {serv.title}
-                        </h3>
-                        <p className="text-xs font-bold text-emerald-500">
-                          {serv.short}
-                        </p>
-                      </div>
-
-                      <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
-                        {serv.description}
-                      </p>
-
-                      <ul className="space-y-2 pt-2 border-t border-slate-850">
-                        {serv.benefits.map((b, bi) => (
-                          <li key={bi} className="flex items-center gap-1.5 text-xs text-slate-300">
-                            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
-                            <span>{b}</span>
-                          </li>
-                        ))}
-                      </ul>
+                    {/* Centered Emoji Icon with large background rounded box */}
+                    <div className="bg-slate-50 w-20 h-20 flex items-center justify-center rounded-2xl mb-6 shadow-sm text-4xl group-hover:scale-105 transition-transform duration-250">
+                      {serv.icon}
                     </div>
 
-                    <button
-                      onClick={() => handleServiceCardClick(serv.id as any)}
-                      className="mt-6 w-full py-2 px-4 rounded-xl text-xs font-bold bg-slate-950 hover:bg-emerald-500 hover:text-slate-950 border border-slate-800 text-slate-300 transition-colors cursor-pointer"
-                    >
-                      Inquire on WhatsApp
-                    </button>
+                    <h3 className="font-extrabold text-slate-900 text-xl sm:text-2xl mb-2">
+                      {serv.title}
+                    </h3>
+
+                    <p className="text-slate-500 font-semibold text-sm leading-relaxed max-w-xs">
+                      {serv.short}
+                    </p>
                   </div>
                 ))}
               </div>
             </section>
 
-            {/* WHY CHOOSE GULSHAN SHARMA DECK */}
-            <section className="bg-slate-900/40 rounded-3xl p-8 sm:p-12 border border-slate-900/60 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-              <div className="lg:col-span-7 space-y-6">
-                <span className="text-xs font-black tracking-widest text-emerald-500 uppercase bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">
-                  Value Proposition
-                </span>
-                <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-                  Why Sharma Prop Mart is Trusted Since 2008
-                </h3>
-                <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
-                  Real Estate can be complex, especially with government authority plots in Yamuna Expressway. We bridge the gap with absolute verification, legally compliance paper checks, clean transactions, and strategic pricing. Our headquarters at Mayur Vihar, New Delhi guarantees local and physical accessibility whenever needed.
-                </p>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pb-2">
-                  <div className="flex gap-3 items-start">
-                    <div className="bg-emerald-500/10 p-2 rounded-lg text-emerald-400">
-                      <ShieldCheck className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-white text-sm">Legally Certified Listings</h4>
-                      <p className="text-xs text-slate-400">Every sector parcel is pre-audited and cross-checked with respective authorities.</p>
-                    </div>
-                  </div>
-                  <div className="flex gap-3 items-start">
-                    <div className="bg-emerald-500/10 p-2 rounded-lg text-emerald-400">
-                      <HeartHandshake className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-white text-sm">Direct Customer Dealings</h4>
-                      <p className="text-xs text-slate-400">We maintain direct, uninflated correspondence between sellers and buyers.</p>
-                    </div>
-                  </div>
-                </div>
+            {/* SECTION: WHY CHOOSE SHARMA PROP MART */}
+            <section id="why-choose-section" className="space-y-10">
+              <div className="text-center">
+                <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                  Why Choose Sharma Prop Mart?
+                </h2>
               </div>
 
-              {/* Decorative CTA panel */}
-              <div className="lg:col-span-5 bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 p-6 rounded-2xl text-center space-y-6">
-                <div className="bg-emerald-500/10 w-16 h-16 rounded-full flex items-center justify-center text-emerald-500 mx-auto text-3xl">
-                  📞
-                </div>
-                <div>
-                  <h4 className="text-lg font-extrabold text-white">Have a Specific Sector Plan?</h4>
-                  <p className="text-xs text-slate-400 mt-2">
-                    Connect instantly with our Managing Consultant Gulshan Sharma.
-                  </p>
-                </div>
-                <div className="space-y-2">
-                  <a 
-                    href={`tel:${OFFICE_CONTACT.phone}`}
-                    className="block w-full bg-slate-950 hover:bg-slate-850/80 text-white font-bold py-2.5 rounded-lg text-xs tracking-wider uppercase border border-slate-800 transition-colors duration-100"
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                {[
+                  {
+                    icon: '✔️',
+                    colorClass: 'bg-emerald-500/10 text-emerald-400',
+                    title: '30+ Years Experience',
+                    desc: 'Trusted by thousands of families in Greater Noida & Yamuna Expressway.'
+                  },
+                  {
+                    icon: '📍',
+                    colorClass: 'bg-rose-500/10 text-rose-400',
+                    title: 'Prime Locations',
+                    desc: 'Expert knowledge of Alpha, Beta, Gamma, Delta & all major sectors.'
+                  },
+                  {
+                    icon: '💯',
+                    colorClass: 'bg-amber-500/10 text-amber-400',
+                    title: 'Transparent Deals',
+                    desc: 'No hidden charges. Best rates guaranteed.'
+                  }
+                ].map((item, idx) => (
+                  <div 
+                    key={idx}
+                    className="bg-slate-900/60 border border-slate-800/80 rounded-2xl p-8 flex flex-col items-center justify-center text-center shadow-lg hover:border-slate-700 transition-all duration-300"
                   >
-                    Call Now: {OFFICE_CONTACT.phone}
-                  </a>
-                  <a 
-                    href={`https://wa.me/${whatsappNumbers[0]?.raw || OFFICE_CONTACT.rawPhone2}?text=Hello%20I%20want%20to%20discuss%20property`}
-                    target="_blank"
-                    referrerPolicy="no-referrer"
-                    className="block w-full bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold py-2.5 rounded-lg text-xs tracking-wider uppercase transition-colors duration-100 cursor-pointer"
-                  >
-                    Discuss on WhatsApp
-                  </a>
-                </div>
+                    <div className={`${item.colorClass} w-16 h-16 flex items-center justify-center rounded-2xl mb-6 text-3xl font-extrabold shadow-sm`}>
+                      {item.icon}
+                    </div>
+
+                    <h3 className="font-extrabold text-white text-lg sm:text-xl mb-3">
+                      {item.title}
+                    </h3>
+
+                    <p className="text-slate-400 text-xs sm:text-sm leading-relaxed max-w-xs">
+                      {item.desc}
+                    </p>
+                  </div>
+                ))}
               </div>
             </section>
 
