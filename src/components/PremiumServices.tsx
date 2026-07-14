@@ -1,4 +1,5 @@
 import React from 'react';
+import EmiCalculator from './EmiCalculator';
 import { 
   Building2, 
   Layers, 
@@ -714,6 +715,10 @@ export default function PremiumServices({
               )}
             </div>
 
+          </div>
+
+          <div className="lg:col-span-12 mt-8">
+            <EmiCalculator />
           </div>
         </div>
         </div>
