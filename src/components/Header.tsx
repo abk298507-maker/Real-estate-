@@ -1,117 +1,182 @@
 import React from 'react';
 import { ActiveTab } from '../types';
-import { Phone, MessageSquare, ShieldCheck, User, Settings, TrendingUp } from 'lucide-react';
-import { OFFICE_CONTACT } from '../data';
+import { User, Settings, TrendingUp, Menu, X, Plus } from 'lucide-react';
 
 interface HeaderProps {
   activeTab: ActiveTab;
   setActiveTab: (tab: ActiveTab) => void;
   onOpenProfile: () => void;
+  onOpenPostProperty?: () => void;
 }
 
-export default function Header({ activeTab, setActiveTab, onOpenProfile }: HeaderProps) {
+export default function Header({ activeTab, setActiveTab, onOpenProfile, onOpenPostProperty }: HeaderProps) {
+  const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+
   return (
-    <header className="sticky top-0 z-50 bg-white text-slate-900 border-b border-slate-100 shadow-sm" id="app-header">
+    <header className="sticky top-0 z-50 bg-gradient-to-r from-[#005ca8] to-[#0078db] text-white shadow-md" id="app-header">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
-          {/* Logo Brand: Vertical style matching the screenshot */}
+        <div className="flex justify-between items-center h-16">
+          {/* Logo Brand: Matching Screenshot style */}
           <div 
-            className="flex flex-col leading-none font-black text-left text-xs sm:text-sm md:text-base tracking-tighter text-slate-900 uppercase cursor-pointer select-none shrink-0" 
-            onClick={() => setActiveTab('home')}
+            className="flex items-center gap-2 cursor-pointer select-none shrink-0" 
+            onClick={() => {
+              setActiveTab('home');
+              setMobileMenuOpen(false);
+            }}
             id="brand-logo-container"
           >
-            <span>SHARMA</span>
-            <span>PROP</span>
-            <span>MART</span>
+            <div className="w-8 h-8 bg-white rounded-md flex items-center justify-center text-[#005ca8] font-black text-lg shadow-sm">
+              S
+            </div>
+            <span className="text-lg sm:text-xl font-extrabold tracking-tight text-white font-sans">
+              Sharma Prop Mart
+            </span>
           </div>
 
-          {/* Navigation Links: Directly visible horizontally on both mobile and desktop */}
-          <nav className="flex items-center gap-3 sm:gap-6 md:gap-8 text-xs sm:text-sm md:text-base font-extrabold text-slate-900" id="desktop-navbar">
+          {/* Navigation Links: Matching Mockup exactly */}
+          <nav className="hidden md:flex items-center gap-7 text-xs sm:text-sm font-semibold" id="desktop-navbar">
             <button
               onClick={() => setActiveTab('home')}
-              className={`transition-all py-1.5 px-1 cursor-pointer ${
-                activeTab === 'home'
-                  ? 'text-emerald-600 border-b-2 border-emerald-500 font-black'
-                  : 'text-slate-700 hover:text-black hover:border-b-2 hover:border-slate-300'
+              className={`relative py-1.5 cursor-pointer hover:opacity-100 transition-opacity ${
+                activeTab === 'home' ? 'opacity-100 font-bold after:absolute after:bottom-[-12px] after:left-0 after:right-0 after:h-[2px] after:bg-white after:rounded-full' : 'opacity-85'
               }`}
-              id="nav-home"
             >
-              Home
+              For Buyers
             </button>
             <button
-              onClick={() => setActiveTab('categories')}
-              className={`transition-all py-1.5 px-1 cursor-pointer ${
-                activeTab === 'categories'
-                  ? 'text-emerald-600 border-b-2 border-emerald-500 font-black'
-                  : 'text-slate-700 hover:text-black hover:border-b-2 hover:border-slate-300'
+              onClick={() => setActiveTab('yamuna')}
+              className={`relative py-1.5 cursor-pointer hover:opacity-100 transition-opacity ${
+                activeTab === 'yamuna' ? 'opacity-100 font-bold after:absolute after:bottom-[-12px] after:left-0 after:right-0 after:h-[2px] after:bg-white after:rounded-full' : 'opacity-85'
               }`}
-              id="nav-categories"
             >
-              Listings
+              For Tenants
             </button>
             <button
               onClick={() => setActiveTab('inquiry')}
-              className={`transition-all py-1.5 px-1 cursor-pointer ${
-                activeTab === 'inquiry'
-                  ? 'text-emerald-600 border-b-2 border-emerald-500 font-black'
-                  : 'text-slate-700 hover:text-black hover:border-b-2 hover:border-slate-300'
+              className={`relative py-1.5 cursor-pointer hover:opacity-100 transition-opacity ${
+                activeTab === 'inquiry' ? 'opacity-100 font-bold after:absolute after:bottom-[-12px] after:left-0 after:right-0 after:h-[2px] after:bg-white after:rounded-full' : 'opacity-85'
               }`}
-              id="nav-inquiry"
             >
-              Inquiry
+              For Owners
             </button>
-            <button
-              onClick={() => setActiveTab('contact')}
-              className={`transition-all py-1.5 px-1 cursor-pointer ${
-                activeTab === 'contact'
-                  ? 'text-emerald-600 border-b-2 border-emerald-500 font-black'
-                  : 'text-slate-700 hover:text-black hover:border-b-2 hover:border-slate-300'
-              }`}
-              id="nav-contact"
-            >
-              Contact
-            </button>
-          </nav>
-
-          {/* Premium Utility Desk (Hidden on ultra-small viewports to keep menu clean) */}
-          <div className="hidden md:flex items-center gap-3 lg:gap-4 shrink-0" id="header-cta">
-            <button
-              onClick={onOpenProfile}
-              className="flex items-center gap-1.5 bg-slate-50 hover:bg-slate-100 text-emerald-600 border border-slate-200 hover:border-emerald-500/30 px-3 py-1.5 rounded-xl font-extrabold text-xs uppercase tracking-wider transition-all cursor-pointer"
-              title="My Search Activity"
-            >
-              <User className="w-3.5 h-3.5 fill-emerald-600/10" />
-              <span>My Activity</span>
-            </button>
-
-            {/* Discrete Admin & SEO shortcuts */}
             <button
               onClick={() => setActiveTab('admin')}
-              className="flex items-center gap-1 bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 px-2.5 py-1.5 rounded-xl font-bold text-xs transition-all cursor-pointer"
-              title="Admin Panel"
+              className={`relative py-1.5 cursor-pointer hover:opacity-100 transition-opacity ${
+                activeTab === 'admin' ? 'opacity-100 font-bold after:absolute after:bottom-[-12px] after:left-0 after:right-0 after:h-[2px] after:bg-white after:rounded-full' : 'opacity-85'
+              }`}
             >
-              <Settings className="w-3.5 h-3.5 text-slate-500" />
+              For Dealers
             </button>
             <button
               onClick={() => setActiveTab('seo')}
-              className="flex items-center gap-1 bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 px-2.5 py-1.5 rounded-xl font-bold text-xs transition-all cursor-pointer"
-              title="SEO SEO Rank Checker"
+              className={`relative py-1.5 cursor-pointer hover:opacity-100 transition-opacity ${
+                activeTab === 'seo' ? 'opacity-100 font-bold after:absolute after:bottom-[-12px] after:left-0 after:right-0 after:h-[2px] after:bg-white after:rounded-full' : 'opacity-85'
+              }`}
             >
-              <TrendingUp className="w-3.5 h-3.5 text-slate-500" />
+              Insights
+            </button>
+          </nav>
+
+          {/* Header Actions: Matching Mockup buttons */}
+          <div className="flex items-center gap-3 sm:gap-4 shrink-0" id="header-cta">
+            <button
+              onClick={() => {
+                if (onOpenPostProperty) {
+                  onOpenPostProperty();
+                } else {
+                  setActiveTab('inquiry');
+                }
+              }}
+              className="bg-white text-[#005ca8] hover:bg-slate-50 border border-transparent px-4 py-1.5 rounded-full font-bold text-xs flex items-center gap-1.5 transition-all shadow-md hover:scale-[1.02] cursor-pointer"
+            >
+              <span>Post property</span>
+              <span className="bg-[#ff6b35] text-white text-[9px] px-1.5 py-0.5 rounded font-black tracking-wide leading-none">
+                FREE
+              </span>
             </button>
 
-            <a
-              href={`tel:${OFFICE_CONTACT.phone}`}
-              className="hidden lg:flex items-center gap-1.5 text-slate-600 hover:text-emerald-600 font-medium text-xs transition-colors"
+            {/* User Profile avatar circle */}
+            <button
+              onClick={onOpenProfile}
+              className="w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center text-white text-sm transition-all cursor-pointer border border-white/10"
+              title="User Actions & History"
             >
-              <div className="bg-slate-50 p-1.5 rounded-full border border-slate-100">
-                <Phone className="w-3.5 h-3.5 text-emerald-500" />
-              </div>
-              <span className="font-extrabold">{OFFICE_CONTACT.phone}</span>
-            </a>
+              👤
+            </button>
+
+            {/* Mobile Menu Toggle Button */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden text-white p-1 hover:bg-white/10 rounded-lg transition-colors cursor-pointer"
+            >
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
           </div>
         </div>
       </div>
+
+      {/* Mobile Menu Overlay */}
+      {mobileMenuOpen && (
+        <div className="md:hidden bg-[#005ca8] border-t border-white/10 text-white animate-in slide-in-from-top duration-200">
+          <div className="px-4 py-4 space-y-3 font-semibold text-sm">
+            <button
+              onClick={() => {
+                setActiveTab('home');
+                setMobileMenuOpen(false);
+              }}
+              className="block w-full text-left py-2 hover:bg-white/10 px-3 rounded-lg"
+            >
+              For Buyers
+            </button>
+            <button
+              onClick={() => {
+                setActiveTab('yamuna');
+                setMobileMenuOpen(false);
+              }}
+              className="block w-full text-left py-2 hover:bg-white/10 px-3 rounded-lg"
+            >
+              For Tenants
+            </button>
+            <button
+              onClick={() => {
+                setActiveTab('inquiry');
+                setMobileMenuOpen(false);
+              }}
+              className="block w-full text-left py-2 hover:bg-white/10 px-3 rounded-lg"
+            >
+              For Owners
+            </button>
+            <button
+              onClick={() => {
+                setActiveTab('admin');
+                setMobileMenuOpen(false);
+              }}
+              className="block w-full text-left py-2 hover:bg-white/10 px-3 rounded-lg"
+            >
+              For Dealers
+            </button>
+            <button
+              onClick={() => {
+                setActiveTab('seo');
+                setMobileMenuOpen(false);
+              }}
+              className="block w-full text-left py-2 hover:bg-white/10 px-3 rounded-lg"
+            >
+              Insights
+            </button>
+            <button
+              onClick={() => {
+                setActiveTab('contact');
+                setMobileMenuOpen(false);
+              }}
+              className="block w-full text-left py-2 hover:bg-white/10 px-3 rounded-lg text-emerald-300"
+            >
+              Contact Us
+            </button>
+          </div>
+        </div>
+      )}
     </header>
   );
 }
+
