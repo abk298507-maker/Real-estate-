@@ -17,6 +17,7 @@ import AdminPanel from './components/AdminPanel';
 import AllCategories from './components/AllCategories';
 import PremiumServices from './components/PremiumServices';
 import SearchSimulator from './components/SearchSimulator';
+import PostProperty from './components/PostProperty';
 import { UserProfileDrawer, PostPropertyWizard, StuckInFormPopup } from './components/My99AcresServices';
 import { 
   Phone, 
@@ -402,6 +403,7 @@ export default function App() {
         activeTab={activeTab} 
         setActiveTab={setActiveTab} 
         onOpenProfile={() => setIsProfileOpen(true)} 
+        onOpenPostProperty={() => setActiveTab('post-property')}
       />
 
       {/* Hero Section displayed on Homepage */}
@@ -846,6 +848,23 @@ export default function App() {
           </div>
         )}
 
+        {/* VIEW: POST PROPERTY & BANNER DESIGNER */}
+        {activeTab === 'post-property' && (
+          <div className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <PostProperty 
+              onAddListing={(newListing) => {
+                const updated = [newListing, ...allListings];
+                setAllListings(updated);
+                localStorage.setItem('sharma_prop_listings', JSON.stringify(updated));
+                setNotification('Property successfully listed on Sharma Prop Mart!');
+                setTimeout(() => setNotification(null), 3000);
+              }}
+              setActiveTab={setActiveTab}
+              setNotification={setNotification}
+            />
+          </div>
+        )}
+
         {/* VIEW: REQUIREMENTS WORKFLOW */}
         {activeTab === 'inquiry' && (
           <div className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1043,7 +1062,7 @@ export default function App() {
         }}
         triggerPostProperty={() => {
           setIsProfileOpen(false);
-          setIsPostPropertyOpen(true);
+          setActiveTab('post-property');
         }}
       />
 
