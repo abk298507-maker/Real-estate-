@@ -276,7 +276,7 @@ Suggested Sizes: 6x3 Feet (Flex), 5x3 Feet (Flex) or A5 Flyer/Handout
             }`}
           >
             <ListChecks className="w-4 h-4" />
-            <span>Post Property (99acres Form)</span>
+            <span>Post Property Form</span>
           </button>
           
           <button

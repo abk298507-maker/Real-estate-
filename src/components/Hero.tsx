@@ -15,15 +15,18 @@ interface HeroProps {
   }) => void;
 }
 
+const sharmaPropBanner = new URL('../assets/images/sharma_prop_banner_1784025905695.jpg', import.meta.url).href;
+
 const HERO_SLIDES = [
   {
-    image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1600&h=900&fit=crop",
+    image: sharmaPropBanner,
     badge: "🔥 New Launch",
-    heading: "A PREMIUM RESIDENTIAL EXPERIENCE",
-    subtitle: "New Launch | Sector 84, Gurgaon",
-    project: "GRATITUDE 84",
+    heading: "", // Empty to show the beautiful pre-rendered text in the mockup banner!
+    subtitle: "",
+    project: "GRATITUDE 84 & LAMOSE",
     rera: "Rera No: GGM/1034/766/2026",
-    logoText: "GRATITUDE 84"
+    logoText: "GRATITUDE 84",
+    isMockupBanner: true
   },
   {
     image: "https://images.unsplash.com/photo-1524813686514-a57563d77d61?w=1600&h=900&fit=crop",
@@ -32,7 +35,8 @@ const HERO_SLIDES = [
     subtitle: "Best Plots & Land near Yamuna Expressway",
     project: "LAMOSE LANDS",
     rera: "Rera No: HR/REP/2026/89",
-    logoText: "LAMOSE"
+    logoText: "LAMOSE",
+    isMockupBanner: false
   },
   {
     image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1600&h=900&fit=crop",
@@ -41,7 +45,8 @@ const HERO_SLIDES = [
     subtitle: "Ready for Business | Sector 62, Noida",
     project: "SHARMA METRO MART",
     rera: "Rera No: UP-RERA-2026-042",
-    logoText: "METRO MART"
+    logoText: "METRO MART",
+    isMockupBanner: false
   }
 ];
 
@@ -169,7 +174,9 @@ export default function Hero({ setActiveTab, setQuickSearch, setQuickType, onFil
         <div 
           className="absolute inset-0 bg-cover bg-center transition-all duration-1000 scale-105"
           style={{ 
-            backgroundImage: `linear-gradient(rgba(0, 20, 50, 0.65), rgba(0, 10, 30, 0.85)), url('${activeSlideData.image}')`,
+            backgroundImage: activeSlideData.isMockupBanner 
+              ? `linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.05)), url('${activeSlideData.image}')`
+              : `linear-gradient(rgba(0, 20, 50, 0.65), rgba(0, 10, 30, 0.85)), url('${activeSlideData.image}')`,
           }}
         />
         {/* Soft bottom vignette overlay */}
@@ -196,67 +203,74 @@ export default function Hero({ setActiveTab, setQuickSearch, setQuickType, onFil
       <div className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-24 space-y-6">
         
         {/* Slide dynamic banner info */}
-        <div className="space-y-4 animate-in fade-in duration-500">
-          {/* Badge */}
-          <div className="inline-flex items-center gap-1.5 bg-[#0078db]/20 border border-[#0078db]/35 px-4 py-1.5 rounded-full text-blue-300 text-xs font-black uppercase tracking-widest">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-            <span>{activeSlideData.badge}</span>
-          </div>
+        {!activeSlideData.isMockupBanner ? (
+          <div className="space-y-4 animate-in fade-in duration-500">
+            {/* Badge */}
+            <div className="inline-flex items-center gap-1.5 bg-[#0078db]/20 border border-[#0078db]/35 px-4 py-1.5 rounded-full text-blue-300 text-xs font-black uppercase tracking-widest">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+              <span>{activeSlideData.badge}</span>
+            </div>
 
-          {/* Large display typography */}
-          <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight drop-shadow-md font-sans uppercase leading-tight max-w-4xl mx-auto">
-            {activeSlideData.heading}
-          </h1>
+            {/* Large display typography */}
+            <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight drop-shadow-md font-sans uppercase leading-tight max-w-4xl mx-auto">
+              {activeSlideData.heading}
+            </h1>
 
-          {/* Subtitle / Details */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 text-slate-200 text-sm sm:text-base font-semibold">
-            <span>{activeSlideData.subtitle}</span>
-            <span className="hidden sm:inline text-slate-400">•</span>
-            <span className="bg-white/10 px-2.5 py-0.5 rounded text-amber-400 text-xs font-mono font-bold tracking-tight">
-              {activeSlideData.rera}
-            </span>
-          </div>
+            {/* Subtitle / Details */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 text-slate-200 text-sm sm:text-base font-semibold">
+              <span>{activeSlideData.subtitle}</span>
+              <span className="hidden sm:inline text-slate-400">•</span>
+              <span className="bg-white/10 px-2.5 py-0.5 rounded text-amber-400 text-xs font-mono font-bold tracking-tight">
+                {activeSlideData.rera}
+              </span>
+            </div>
 
-          {/* Explore Button */}
-          <div className="pt-2">
-            <button
-              onClick={() => {
-                const el = document.getElementById('recommended-properties-section');
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
-                showToast(`Viewing listings of project ${activeSlideData.project}...`);
-              }}
-              className="bg-white hover:bg-slate-50 text-[#005ca8] font-black text-xs sm:text-sm px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-all hover:scale-105 active:scale-95 cursor-pointer inline-flex items-center gap-2"
-            >
-              <span>Explore {activeSlideData.project}</span>
-              <span className="font-mono text-base font-black">→</span>
-            </button>
+            {/* Explore Button */}
+            <div className="pt-2">
+              <button
+                onClick={() => {
+                  const el = document.getElementById('recommended-properties-section');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  showToast(`Viewing listings of project ${activeSlideData.project}...`);
+                }}
+                className="bg-white hover:bg-slate-50 text-[#005ca8] font-black text-xs sm:text-sm px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-all hover:scale-105 active:scale-95 cursor-pointer inline-flex items-center gap-2"
+              >
+                <span>Explore {activeSlideData.project}</span>
+                <span className="font-mono text-base font-black">→</span>
+              </button>
+            </div>
           </div>
-        </div>
+        ) : (
+          /* Large empty spacing to allow the 99acres mockup banner's graphics and text to shine without overlay clutter */
+          <div className="h-28 sm:h-36" />
+        )}
 
         {/* Dynamic simulation banner cards (G84 and LAMOSE style logos) */}
-        <div className="grid grid-cols-2 gap-4 max-w-sm mx-auto pt-2 opacity-85 hover:opacity-100 transition-opacity">
-          <div className="bg-slate-900/60 border border-slate-800/80 p-2.5 rounded-xl text-left backdrop-blur-xs flex items-center gap-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 text-white font-extrabold rounded-lg flex items-center justify-center text-xs">
-              G84
+        {!activeSlideData.isMockupBanner && (
+          <div className="grid grid-cols-2 gap-4 max-w-sm mx-auto pt-2 opacity-85 hover:opacity-100 transition-opacity">
+            <div className="bg-slate-900/60 border border-slate-800/80 p-2.5 rounded-xl text-left backdrop-blur-xs flex items-center gap-2">
+              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 text-white font-extrabold rounded-lg flex items-center justify-center text-xs">
+                G84
+              </div>
+              <div>
+                <p className="text-[10px] text-white font-black leading-none uppercase">GRATITUDE 84</p>
+                <span className="text-[8px] text-slate-400">Sector 84, GGN</span>
+              </div>
             </div>
-            <div>
-              <p className="text-[10px] text-white font-black leading-none uppercase">GRATITUDE 84</p>
-              <span className="text-[8px] text-slate-400">Sector 84, GGN</span>
+            <div className="bg-slate-900/60 border border-slate-800/80 p-2.5 rounded-xl text-left backdrop-blur-xs flex items-center gap-2">
+              <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-teal-600 text-white font-extrabold rounded-lg flex items-center justify-center text-xs">
+                LM
+              </div>
+              <div>
+                <p className="text-[10px] text-white font-black leading-none uppercase">LAMOSE RESIDENCY</p>
+                <span className="text-[8px] text-slate-400">Yamuna Expressway</span>
+              </div>
             </div>
           </div>
-          <div className="bg-slate-900/60 border border-slate-800/80 p-2.5 rounded-xl text-left backdrop-blur-xs flex items-center gap-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-teal-600 text-white font-extrabold rounded-lg flex items-center justify-center text-xs">
-              LM
-            </div>
-            <div>
-              <p className="text-[10px] text-white font-black leading-none uppercase">LAMOSE RESIDENCY</p>
-              <span className="text-[8px] text-slate-400">Yamuna Expressway</span>
-            </div>
-          </div>
-        </div>
+        )}
 
         {/* 99acres Styled Search Panel Overlap */}
-        <div className="bg-white rounded-2xl shadow-2xl overflow-hidden max-w-4xl mx-auto text-left border border-slate-200 mt-6 relative z-30">
+        <div className="bg-white rounded-2xl shadow-2xl overflow-hidden max-w-4xl mx-auto text-left border border-slate-200 mt-6 relative z-30 animate-in fade-in zoom-in-95 duration-300">
           
           {/* Tab Selection Bar with 'Post Property FREE' Badge on Right */}
           <div className="flex flex-col sm:flex-row border-b border-slate-100 bg-slate-50/50 justify-between items-stretch sm:items-center px-2">
@@ -290,10 +304,10 @@ export default function Hero({ setActiveTab, setQuickSearch, setQuickType, onFil
             {/* Right Side: Post Property FREE */}
             <button
               onClick={() => setActiveTab('post-property')}
-              className="py-3 px-4 text-right text-xs sm:text-sm font-extrabold text-emerald-600 hover:text-emerald-700 flex items-center justify-end gap-1.5 cursor-pointer whitespace-nowrap border-t sm:border-t-0 border-slate-100"
+              className="py-3 px-4 text-right text-xs sm:text-sm font-extrabold text-[#34a853] hover:text-[#2e934a] flex items-center justify-end gap-1.5 cursor-pointer whitespace-nowrap border-t sm:border-t-0 border-slate-100"
             >
               <span>Post Property</span>
-              <span className="bg-emerald-600 text-white text-[9px] px-2 py-0.5 rounded-md font-black uppercase tracking-wider">
+              <span className="bg-[#34a853] text-white text-[9px] px-2 py-0.5 rounded-md font-black uppercase tracking-wider">
                 FREE
               </span>
             </button>
@@ -417,9 +431,30 @@ export default function Hero({ setActiveTab, setQuickSearch, setQuickType, onFil
           </div>
         </div>
 
+        {/* Recent searches row from the 99acres mockup */}
+        <div className="text-slate-200 text-xs font-semibold flex flex-wrap items-center justify-center gap-2.5 pt-2 relative z-20">
+          <span className="opacity-80">Recent searches:</span>
+          <button 
+            onClick={() => setSearchText("Greater Noida")}
+            className="text-white hover:underline transition-all hover:text-blue-200"
+          >
+            Buy in Greater Noida
+          </button>
+          <span className="opacity-50">•</span>
+          <button 
+            onClick={() => {
+              setActiveTab('categories');
+              showToast("Opening all category property listings...");
+            }}
+            className="text-white hover:underline transition-all hover:text-blue-200 font-extrabold"
+          >
+            View all searches
+          </button>
+        </div>
+
         {/* Interactive Voice Helper Banner */}
         {isListeningVoice && (
-          <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl p-3 max-w-xl mx-auto shadow-lg flex items-center gap-3 justify-center animate-pulse border border-white/10 z-40 relative">
+          <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl p-3 max-w-xl mx-auto shadow-lg flex items-center gap-3 justify-center animate-pulse border border-white/10 z-45 relative">
             <span className="flex h-3 w-3 relative">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
@@ -446,7 +481,7 @@ export default function Hero({ setActiveTab, setQuickSearch, setQuickType, onFil
                 onClick={() => handleChipToggle(chip)}
                 className={`px-4 py-1.5 rounded-full text-xs font-bold border transition-all cursor-pointer ${
                   isActive 
-                    ? 'bg-white text-[#005ca8] border-white font-extrabold shadow-md' 
+                    ? 'bg-[#0078db] text-white border-[#0078db] font-extrabold shadow-md' 
                     : 'bg-white/10 text-white border-white/20 hover:bg-white/20 hover:border-white/30'
                 }`}
               >

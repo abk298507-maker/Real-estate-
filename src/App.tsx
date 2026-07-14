@@ -450,111 +450,164 @@ export default function App() {
               </div>
 
               {filteredRecommended.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {filteredRecommended.map((p) => {
-                    const isShortlisted = shortlistedIds.includes(p.id);
-                    return (
-                      <div 
-                        key={p.id}
-                        className="bg-white rounded-2xl border border-slate-150 overflow-hidden shadow-sm hover:shadow-md transition-all group flex flex-col justify-between"
-                      >
-                        {/* Image Wrapper */}
-                        <div className="relative h-56 overflow-hidden bg-slate-100">
-                          <img 
-                            src={p.image} 
-                            alt={p.name} 
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                            referrerPolicy="no-referrer"
-                          />
-                          {/* Badges row */}
-                          <div className="absolute top-3.5 left-3.5 flex flex-wrap gap-1.5 z-10">
-                            {p.badges.map((badge) => (
-                              <span 
-                                key={badge}
-                                className={`text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded shadow-sm border ${
-                                  badge === 'rera' ? 'bg-[#0078db] text-white border-[#0078db]' :
-                                  badge === 'verified' ? 'bg-emerald-600 text-white border-emerald-600' :
-                                  badge === 'featured' ? 'bg-amber-500 text-slate-900 border-amber-500' :
-                                  'bg-slate-900 text-white border-slate-900'
-                                }`}
-                              >
-                                {badge}
-                              </span>
-                            ))}
-                          </div>
-
-                          {/* Heart Shortlist toggle */}
-                          <button
-                            onClick={() => handleToggleShortlist(p.id)}
-                            className="absolute top-3.5 right-3.5 w-9 h-9 bg-white/95 backdrop-blur-sm rounded-full flex items-center justify-center text-slate-700 hover:text-rose-600 transition-colors shadow-md cursor-pointer hover:scale-105 active:scale-95"
-                            title={isShortlisted ? "Remove from Shortlist" : "Add to Shortlist"}
-                          >
-                            <svg 
-                              xmlns="http://www.w3.org/2000/svg" 
-                              viewBox="0 0 24 24" 
-                              fill={isShortlisted ? "#e11d48" : "none"} 
-                              stroke={isShortlisted ? "#e11d48" : "currentColor"} 
-                              className="w-5 h-5"
-                              strokeWidth="2.5"
-                            >
-                              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                            </svg>
-                          </button>
-                        </div>
-
-                        {/* Content Area */}
-                        <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
-                          <div>
-                            {/* Price & Rate/sqft row */}
-                            <div className="flex justify-between items-baseline">
-                              <span className="text-xl font-black text-[#0078db]">{p.price}</span>
-                              <span className="text-xs font-semibold text-slate-500">{p.pricePerSqft}</span>
+                <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
+                  
+                  {/* Left 3 Columns Area: Properties List */}
+                  <div className="lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {filteredRecommended.map((p) => {
+                      const isShortlisted = shortlistedIds.includes(p.id);
+                      return (
+                        <div 
+                          key={p.id}
+                          className="bg-white rounded-2xl border border-slate-150 overflow-hidden shadow-sm hover:shadow-md transition-all group flex flex-col justify-between"
+                        >
+                          {/* Image Wrapper */}
+                          <div className="relative h-52 overflow-hidden bg-slate-100">
+                            <img 
+                              src={p.image} 
+                              alt={p.name} 
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                              referrerPolicy="no-referrer"
+                            />
+                            {/* Badges row */}
+                            <div className="absolute top-3.5 left-3.5 flex flex-wrap gap-1.5 z-10">
+                              {p.badges.map((badge) => (
+                                <span 
+                                  key={badge}
+                                  className={`text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded shadow-sm border ${
+                                    badge === 'rera' ? 'bg-[#0078db] text-white border-[#0078db]' :
+                                    badge === 'verified' ? 'bg-emerald-600 text-white border-emerald-600' :
+                                    badge === 'featured' ? 'bg-amber-500 text-slate-900 border-amber-500' :
+                                    'bg-slate-900 text-white border-slate-900'
+                                  }`}
+                                >
+                                  {badge}
+                                </span>
+                              ))}
                             </div>
 
-                            {/* Property Name */}
-                            <h3 className="font-extrabold text-[#091e42] text-sm sm:text-base mt-2 line-clamp-1 group-hover:text-[#0078db] transition-colors">
-                              {p.name}
-                            </h3>
-
-                            {/* Location with map pin */}
-                            <p className="text-xs text-slate-500 font-bold flex items-center gap-1 mt-1">
-                              <span className="text-slate-400">📍</span>
-                              <span>{p.location}</span>
-                            </p>
-                          </div>
-
-                          {/* Quick details specs layout */}
-                          <div className="grid grid-cols-3 gap-2 py-3 border-t border-b border-slate-100 text-center text-xs">
-                            <div>
-                              <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Area</span>
-                              <span className="font-extrabold text-slate-700">{p.area}</span>
-                            </div>
-                            <div>
-                              <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Type</span>
-                              <span className="font-extrabold text-slate-700">{p.bhk}</span>
-                            </div>
-                            <div>
-                              <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Status</span>
-                              <span className="font-extrabold text-slate-700 truncate block">{p.status}</span>
-                            </div>
-                          </div>
-
-                          {/* Action footer */}
-                          <div className="flex justify-between items-center pt-1 gap-2">
-                            <span className="text-[11px] font-semibold text-slate-400">
-                              {p.posted}
-                            </span>
+                            {/* Heart Shortlist toggle */}
                             <button
-                              onClick={() => handleContactClick(p.name)}
-                              className="px-5 py-2.5 bg-[#0078db] hover:bg-[#005ca8] text-white text-xs font-extrabold rounded-lg shadow-sm transition-colors cursor-pointer"
+                              onClick={() => handleToggleShortlist(p.id)}
+                              className="absolute top-3.5 right-3.5 w-9 h-9 bg-white/95 backdrop-blur-sm rounded-full flex items-center justify-center text-slate-700 hover:text-rose-600 transition-colors shadow-md cursor-pointer hover:scale-105 active:scale-95"
+                              title={isShortlisted ? "Remove from Shortlist" : "Add to Shortlist"}
                             >
-                              Contact Owner
+                              <svg 
+                                xmlns="http://www.w3.org/2000/svg" 
+                                viewBox="0 0 24 24" 
+                                fill={isShortlisted ? "#e11d48" : "none"} 
+                                stroke={isShortlisted ? "#e11d48" : "currentColor"} 
+                                className="w-5 h-5"
+                                strokeWidth="2.5"
+                              >
+                                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                              </svg>
                             </button>
                           </div>
+
+                          {/* Content Area */}
+                          <div className="p-4 flex-1 flex flex-col justify-between space-y-4">
+                            <div>
+                              {/* Price & Rate/sqft row */}
+                              <div className="flex justify-between items-baseline">
+                                <span className="text-lg font-black text-[#0078db]">{p.price}</span>
+                                <span className="text-[10px] font-semibold text-slate-500">{p.pricePerSqft}</span>
+                              </div>
+
+                              {/* Property Name */}
+                              <h3 className="font-extrabold text-[#091e42] text-xs sm:text-sm mt-1.5 line-clamp-1 group-hover:text-[#0078db] transition-colors">
+                                {p.name}
+                              </h3>
+
+                              {/* Location with map pin */}
+                              <p className="text-[11px] text-slate-500 font-bold flex items-center gap-1 mt-1">
+                                <span className="text-slate-400 text-xs">📍</span>
+                                <span>{p.location}</span>
+                              </p>
+                            </div>
+
+                            {/* Quick details specs layout */}
+                            <div className="grid grid-cols-3 gap-2 py-2.5 border-t border-b border-slate-100 text-center text-[11px]">
+                              <div>
+                                <span className="block text-[9px] font-bold text-slate-400 uppercase tracking-wider">Area</span>
+                                <span className="font-extrabold text-slate-700">{p.area}</span>
+                              </div>
+                              <div>
+                                <span className="block text-[9px] font-bold text-slate-400 uppercase tracking-wider">Type</span>
+                                <span className="font-extrabold text-slate-700">{p.bhk}</span>
+                              </div>
+                              <div>
+                                <span className="block text-[9px] font-bold text-slate-400 uppercase tracking-wider">Status</span>
+                                <span className="font-extrabold text-slate-700 truncate block">{p.status}</span>
+                              </div>
+                            </div>
+
+                            {/* Action footer */}
+                            <div className="flex justify-between items-center pt-1 gap-2">
+                              <span className="text-[10px] font-semibold text-slate-400">
+                                {p.posted}
+                              </span>
+                              <button
+                                onClick={() => handleContactClick(p.name)}
+                                className="px-4 py-2 bg-[#0078db] hover:bg-[#005ca8] text-[11px] font-extrabold rounded-lg shadow-sm transition-colors cursor-pointer text-white"
+                              >
+                                Contact Owner
+                              </button>
+                            </div>
+                          </div>
                         </div>
+                      );
+                    })}
+                  </div>
+
+                  {/* Right Column Area Sidebar: Guest User Activity Box */}
+                  <div className="lg:col-span-1 bg-white border border-slate-150 rounded-2xl p-5 shadow-xs flex flex-col space-y-4 animate-in fade-in slide-in-from-right duration-300">
+                    {/* User Profile Header */}
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center border border-slate-200 shadow-inner">
+                        <span className="text-xl">👤</span>
                       </div>
-                    );
-                  })}
+                      <div>
+                        <h4 className="font-extrabold text-[#091e42] text-sm">Guest User</h4>
+                        <span className="text-[9px] bg-slate-100 text-slate-500 font-bold px-1.5 py-0.5 rounded uppercase">offline</span>
+                      </div>
+                    </div>
+
+                    {/* Divider */}
+                    <div className="border-t border-slate-100" />
+
+                    {/* Stats */}
+                    <div className="space-y-1.5">
+                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Your Recent Activity</span>
+                      <div 
+                        onClick={() => {
+                          setIsProfileOpen(true);
+                          setNotification("Saved activity logs are waiting in your profile drawer.");
+                          setTimeout(() => setNotification(null), 3000);
+                        }}
+                        className="flex items-center justify-between p-3.5 bg-slate-50 rounded-xl border border-slate-100 hover:bg-slate-100/50 transition-all cursor-pointer hover:border-blue-200 group"
+                      >
+                        <div>
+                          <span className="block text-xl font-black text-[#0078db] group-hover:scale-105 transition-transform">17</span>
+                          <span className="text-[11px] text-slate-500 font-bold">Properties Viewed</span>
+                        </div>
+                        <span className="text-slate-400 group-hover:text-[#0078db] transition-colors text-lg">↗</span>
+                      </div>
+                    </div>
+
+                    <p className="text-slate-500 text-xs font-semibold leading-relaxed">
+                      Save your searches, viewed properties, and shortlist activities across all of your devices.
+                    </p>
+
+                    {/* CTA Button */}
+                    <button
+                      onClick={() => setIsProfileOpen(true)}
+                      className="w-full py-3 bg-[#0078db] hover:bg-[#005ca8] text-white text-xs font-extrabold rounded-xl shadow-md shadow-[#0078db]/10 transition-all hover:scale-[1.01] active:scale-[0.99] cursor-pointer text-center"
+                    >
+                      Login/Register to Save Activity
+                    </button>
+                  </div>
+
                 </div>
               ) : (
                 <div className="bg-white border border-slate-200 rounded-2xl p-10 text-center space-y-4 max-w-lg mx-auto shadow-sm">
