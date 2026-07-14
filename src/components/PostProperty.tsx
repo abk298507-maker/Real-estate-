@@ -17,9 +17,13 @@ import {
   Eye, 
   ListChecks,
   Compass,
-  ArrowRight
+  ArrowRight,
+  Sparkle
 } from 'lucide-react';
 import { PropertyItem } from '../types';
+
+const bannerMockupUrl = new URL('../assets/images/sharma_prop_banner_1784025905695.jpg', import.meta.url).href;
+const uiMockupUrl = new URL('../assets/images/sharma_prop_ui_mockup_1784025918563.jpg', import.meta.url).href;
 
 interface PostPropertyProps {
   onAddListing: (newListing: PropertyItem) => void;
@@ -1054,6 +1058,77 @@ Suggested Sizes: 6x3 Feet (Flex), 5x3 Feet (Flex) or A5 Flyer/Handout
                   <div className="space-y-1">
                     <p className="text-slate-800">2. True-to-Scale Dimensions</p>
                     <p className="text-[11px] leading-relaxed">The {bannerConfig.aspectRatio === '6x3' ? '6x3 (72" x 36")' : bannerConfig.aspectRatio === '5x3' ? '5x3 (60" x 36")' : 'A5 (5.8" x 8.3")'} ratio matches standard industrial flex machines exactly. No stretching will occur.</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* AI STUDIO COMPANION GENERATED DESIGNS SECTION */}
+              <div className="border-t border-slate-100 pt-8 space-y-6">
+                <div className="space-y-1">
+                  <h4 className="font-black text-[#091e42] text-sm sm:text-base flex items-center gap-2">
+                    <Sparkle className="w-5 h-5 text-amber-500 fill-amber-500 animate-pulse" />
+                    <span>AI Studio Generated Marketing Designs</span>
+                  </h4>
+                  <p className="text-xs text-slate-500 font-medium">Download or review these premium visual drafts generated live using modern AI diffusion blueprints.</p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Banner Mockup */}
+                  <div className="bg-slate-50 border border-slate-200/80 rounded-2xl p-4 space-y-3 shadow-xs">
+                    <div className="relative group overflow-hidden rounded-xl aspect-[16/9] border border-slate-200 bg-white">
+                      <img 
+                        src={bannerMockupUrl} 
+                        alt="Sharma Prop Mart Premium Flex Banner Design" 
+                        className="w-full h-full object-cover group-hover:scale-[1.03] transition-all duration-300" 
+                        referrerPolicy="no-referrer"
+                      />
+                      <span className="absolute bottom-2 left-2 bg-slate-900/80 backdrop-blur-xs text-white text-[9px] font-black uppercase px-2.5 py-1 rounded">
+                        Flex Banner 16:9
+                      </span>
+                    </div>
+                    <div className="space-y-1">
+                      <h5 className="font-extrabold text-slate-800 text-xs">Premium Flex Banner Blueprint</h5>
+                      <p className="text-[10px] text-slate-400 leading-relaxed font-semibold">Includes the Royal Blue and Gold corporate motif, modern apartment rendering, and high-visibility yellow "Post Property FREE" highlight box.</p>
+                    </div>
+                    <div className="pt-1">
+                      <a 
+                        href={bannerMockupUrl} 
+                        target="_blank" 
+                        rel="noreferrer" 
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#0078db] hover:bg-[#005ca8] text-white text-[10px] font-black rounded-lg transition-all"
+                      >
+                        <span>Open High-Res Banner ↗</span>
+                      </a>
+                    </div>
+                  </div>
+
+                  {/* App UI Mockup */}
+                  <div className="bg-slate-50 border border-slate-200/80 rounded-2xl p-4 space-y-3 shadow-xs">
+                    <div className="relative group overflow-hidden rounded-xl aspect-[16/9] border border-slate-200 bg-white">
+                      <img 
+                        src={uiMockupUrl} 
+                        alt="Sharma Prop Mart App UI Design Mockup" 
+                        className="w-full h-full object-cover group-hover:scale-[1.03] transition-all duration-300" 
+                        referrerPolicy="no-referrer"
+                      />
+                      <span className="absolute bottom-2 left-2 bg-slate-900/80 backdrop-blur-xs text-white text-[9px] font-black uppercase px-2.5 py-1 rounded">
+                        App UI Mockup
+                      </span>
+                    </div>
+                    <div className="space-y-1">
+                      <h5 className="font-extrabold text-slate-800 text-xs">Mobile App Signup & Profile Interface</h5>
+                      <p className="text-[10px] text-slate-400 leading-relaxed font-semibold">Clean user dashboard mockup containing interactive tabs: "My Activity", "Recently Searched", "Shortlisted", and the prominent "Post Property FREE" tag.</p>
+                    </div>
+                    <div className="pt-1">
+                      <a 
+                        href={uiMockupUrl} 
+                        target="_blank" 
+                        rel="noreferrer" 
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#0078db] hover:bg-[#005ca8] text-white text-[10px] font-black rounded-lg transition-all"
+                      >
+                        <span>Open High-Res App Mockup ↗</span>
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
