@@ -1,5 +1,6 @@
 import React from 'react';
 import EmiCalculator from './EmiCalculator';
+import PaymentGateway from './PaymentGateway';
 import { 
   Building2, 
   Layers, 
@@ -59,6 +60,24 @@ export default function PremiumServices({
   const activeSection = propsActiveSection || localActiveSection;
   const setActiveSection = propsSetActiveSection || setLocalActiveSection;
   const [toastMessage, setToastMessage] = React.useState<string | null>(null);
+
+  const [userRole, setUserRole] = React.useState<'guest' | 'normal' | 'master'>(() => {
+    return (localStorage.getItem('spm_user_role') as any) || 'guest';
+  });
+  const [isPaymentOpen, setIsPaymentOpen] = React.useState(false);
+
+  // Sync userRole with localStorage periodically to keep tabs in sync
+  React.useEffect(() => {
+    const handleStorageChange = () => {
+      setUserRole((localStorage.getItem('spm_user_role') as any) || 'guest');
+    };
+    window.addEventListener('storage', handleStorageChange);
+    const interval = setInterval(handleStorageChange, 1000);
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      clearInterval(interval);
+    };
+  }, []);
 
   const showToast = (message: string) => {
     setToastMessage(message);
@@ -1277,51 +1296,116 @@ export default function PremiumServices({
             </div>
 
             {/* CRM Leads Table */}
-            <div className="space-y-3">
+            <div className="space-y-3 relative">
               <h4 className="text-xs font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
                 Real-Time Property Inquiries (Live Feed)
               </h4>
 
-              <div className="space-y-3">
-                {crmLeads.map((lead) => (
-                  <div key={lead.id} className="bg-slate-900/80 hover:bg-slate-900 border border-slate-850 p-4 rounded-xl space-y-3 text-xs transition-all">
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-850 pb-2.5">
-                      <div>
-                        <strong className="text-white text-sm">{lead.name}</strong>
-                        <span className="text-[10px] text-slate-400 block font-mono mt-0.5">{lead.phone} • {lead.date}</span>
+              {userRole !== 'master' ? (
+                <div className="relative rounded-2xl overflow-hidden border border-slate-800 bg-slate-950">
+                  {/* Blurred Background Table */}
+                  <div className="space-y-3 filter blur-sm opacity-30 select-none pointer-events-none p-4">
+                    {[
+                      { id: 1, name: 'Amit Kumar', phone: '+91 98100 XXXXX', interest: 'Yamuna Sector 20 (300 MTR Plot)', date: 'Today, 10:15 AM' },
+                      { id: 2, name: 'Dr. Rajesh Sharma', phone: '+91 88000 XXXXX', interest: 'Alpha-2 Greater Noida Commercial Shop', date: 'Yesterday' },
+                    ].map((lead) => (
+                      <div key={lead.id} className="bg-slate-900/80 border border-slate-850 p-4 rounded-xl space-y-3 text-xs">
+                        <div className="flex justify-between border-b border-slate-850 pb-2.5">
+                          <div>
+                            <strong className="text-white text-sm">{lead.name}</strong>
+                            <span className="text-[10px] text-slate-400 block font-mono mt-0.5">{lead.phone} • {lead.date}</span>
+                          </div>
+                        </div>
+                        <div className="flex justify-between items-center text-[11px] text-slate-300">
+                          <span>Interest: <strong className="text-white">{lead.interest}</strong></span>
+                        </div>
                       </div>
-                      <span className={`px-2 py-0.5 rounded text-[10px] font-bold font-mono self-start sm:self-auto ${
-                        lead.status.includes('Pending') ? 'bg-amber-500/10 text-amber-400' :
-                        lead.status.includes('Sent') ? 'bg-blue-500/10 text-blue-400' :
-                        'bg-emerald-500/10 text-emerald-400'
-                      }`}>
-                        {lead.status}
-                      </span>
-                    </div>
+                    ))}
+                  </div>
 
-                    <div className="flex justify-between items-center text-[11px] text-slate-300">
-                      <span>Interest: <strong className="text-white">{lead.interest}</strong></span>
-                      <span className="text-slate-500 font-mono">({lead.clicks} Phone clicks)</span>
-                    </div>
+                  {/* Absolute Centered Gateway Card */}
+                  <div className="absolute inset-0 flex items-center justify-center bg-slate-950/85 p-4 backdrop-blur-xs">
+                    <div className="max-w-md w-full bg-white p-6 rounded-2xl shadow-2xl border border-gray-100 text-center font-sans animate-in zoom-in-95 duration-300">
+                      {/* Header */}
+                      <div className="mb-6">
+                        <h2 className="text-xl font-bold text-blue-900 tracking-tight">SHARMA PROP MART</h2>
+                        <p className="text-xs text-gray-500 font-semibold uppercase tracking-wider mt-0.5">Secure Payment Gateway (Master User)</p>
+                      </div>
 
-                    <div className="flex justify-end gap-2 pt-1">
-                      <button
-                        onClick={() => updateLeadStatus(lead.id, 'Answering Quote')}
-                        className="bg-slate-950 border border-slate-800 text-slate-300 hover:text-white px-2.5 py-1.5 rounded text-[10px] font-bold"
+                      {/* Package Info */}
+                      <div className="bg-blue-50 p-4 rounded-xl mb-6 text-left border border-blue-100">
+                        <div className="flex justify-between items-center">
+                          <span className="font-bold text-gray-700 text-sm">Premium Property Plan</span>
+                          <span className="text-xl font-black text-blue-900 font-mono">₹999</span>
+                        </div>
+                        <p className="text-[11px] text-gray-500 mt-1">Validity: 3 months | Unlimited Premium Leads</p>
+                      </div>
+
+                      {/* Merchant Details */}
+                      <div className="text-left text-xs text-gray-600 space-y-1 bg-gray-50 p-3 rounded-lg mb-6 border border-gray-200/50 font-medium">
+                        <div><strong>Merchant Account:</strong> Sharma Prop Mart</div>
+                        <div><strong>Gateway Route:</strong> <span className="font-mono text-blue-700 font-bold">+91 9279533715</span></div>
+                        <div className="flex items-center gap-1.5">
+                          <strong>Status:</strong> 
+                          <span className="text-green-600 font-bold flex items-center gap-1">
+                            <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
+                            ● Active
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Payment Button */}
+                      <button 
+                        onClick={() => setIsPaymentOpen(true)}
+                        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-extrabold py-3.5 rounded-xl shadow-lg shadow-blue-600/20 hover:shadow-blue-600/30 transition-all cursor-pointer text-sm tracking-wide uppercase"
                       >
-                        Start Call 📞
-                      </button>
-                      <button
-                        onClick={() => updateLeadStatus(lead.id, 'Quote Sent')}
-                        className="bg-emerald-500/15 hover:bg-emerald-500 text-emerald-400 hover:text-slate-950 px-2.5 py-1.5 rounded text-[10px] font-black transition-colors"
-                      >
-                        Send WhatsApp Brochure 💬
+                        Proceed to Pay ₹999
                       </button>
                     </div>
                   </div>
-                ))}
-              </div>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {crmLeads.map((lead) => (
+                    <div key={lead.id} className="bg-slate-900/80 hover:bg-slate-900 border border-slate-850 p-4 rounded-xl space-y-3 text-xs transition-all animate-in fade-in">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-850 pb-2.5">
+                        <div>
+                          <strong className="text-white text-sm">{lead.name}</strong>
+                          <span className="text-[10px] text-slate-400 block font-mono mt-0.5">{lead.phone} • {lead.date}</span>
+                        </div>
+                        <span className={`px-2 py-0.5 rounded text-[10px] font-bold font-mono self-start sm:self-auto ${
+                          lead.status.includes('Pending') ? 'bg-amber-500/10 text-amber-400' :
+                          lead.status.includes('Sent') ? 'bg-blue-500/10 text-blue-400' :
+                          'bg-emerald-500/10 text-emerald-400'
+                        }`}>
+                          {lead.status}
+                        </span>
+                      </div>
+
+                      <div className="flex justify-between items-center text-[11px] text-slate-300">
+                        <span>Interest: <strong className="text-white">{lead.interest}</strong></span>
+                        <span className="text-slate-500 font-mono">({lead.clicks} Phone clicks)</span>
+                      </div>
+
+                      <div className="flex justify-end gap-2 pt-1">
+                        <button
+                          onClick={() => updateLeadStatus(lead.id, 'Answering Quote')}
+                          className="bg-slate-950 border border-slate-800 text-slate-300 hover:text-white px-2.5 py-1.5 rounded text-[10px] font-bold"
+                        >
+                          Start Call 📞
+                        </button>
+                        <button
+                          onClick={() => updateLeadStatus(lead.id, 'Quote Sent')}
+                          className="bg-emerald-500/15 hover:bg-emerald-500 text-emerald-400 hover:text-slate-950 px-2.5 py-1.5 rounded text-[10px] font-black transition-colors"
+                        >
+                          Send WhatsApp Brochure 💬
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
 
           </div>
@@ -1566,6 +1650,25 @@ export default function PremiumServices({
             </div>
           </div>
 
+        </div>
+      )}
+
+      {/* Secure Payment Gateway Modal Overlay */}
+      {isPaymentOpen && (
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-[110] flex items-center justify-center p-4 animate-in fade-in duration-200">
+          <div className="w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-3xl">
+            <PaymentGateway 
+              onClose={() => setIsPaymentOpen(false)}
+              onPaymentSuccess={() => {
+                localStorage.setItem('spm_user_role', 'master');
+                setUserRole('master');
+                showToast('👑 Master User Tier Activated successfully! Unlimited premium leads unlocked.');
+                setTimeout(() => {
+                  setIsPaymentOpen(false);
+                }, 2500);
+              }}
+            />
+          </div>
         </div>
       )}
 

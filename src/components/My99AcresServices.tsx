@@ -1,4 +1,5 @@
 import React from 'react';
+import PaymentGateway from './PaymentGateway';
 import { 
   Building, 
   Building2, 
@@ -733,6 +734,7 @@ export function UserProfileDrawer({
   const [viewedIds, setViewedIds] = React.useState<number[]>([]);
   const [shortlistedIds, setShortlistedIds] = React.useState<number[]>([]);
   const [contactedIds, setContactedIds] = React.useState<number[]>([]);
+  const [isPaymentGatewayOpen, setIsPaymentGatewayOpen] = React.useState(false);
 
   // Reload statistics dynamically
   React.useEffect(() => {
@@ -1294,6 +1296,24 @@ export function UserProfileDrawer({
               </div>
             </button>
           )}
+
+          {userRole !== 'master' && (
+            <button
+              onClick={() => setIsPaymentGatewayOpen(true)}
+              className="w-full bg-gradient-to-r from-blue-950/40 to-slate-950 border border-blue-500/20 hover:border-blue-500/40 p-4 rounded-2xl flex items-center justify-between text-left transition-all cursor-pointer group"
+            >
+              <div>
+                <h5 className="font-extrabold text-blue-400 text-sm flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></span>
+                  <span>Premium Property Plan</span>
+                </h5>
+                <p className="text-[10px] text-slate-400 mt-0.5">₹999 for 3 Months. Unlock CRM Leads!</p>
+              </div>
+              <span className="bg-blue-500/10 text-blue-400 hover:bg-blue-500 hover:text-slate-950 font-bold text-[10px] font-mono px-2 py-1 rounded border border-blue-500/20 transition-all uppercase shrink-0">
+                Upgrade 👑
+              </span>
+            </button>
+          )}
         </div>
 
         {/* PROPERTY SEARCH ACTIVITY BLOCK */}
@@ -1385,6 +1405,23 @@ export function UserProfileDrawer({
           Sharma Prop Mart Services Desk • All rights reserved 2026
         </p>
       </div>
+
+      {isPaymentGatewayOpen && (
+        <div className="fixed inset-0 bg-slate-950/90 backdrop-blur-sm z-[150] flex items-center justify-center p-4 animate-in fade-in duration-200">
+          <div className="w-full max-w-md max-h-[90vh] overflow-y-auto rounded-3xl">
+            <PaymentGateway 
+              onClose={() => setIsPaymentGatewayOpen(false)}
+              onPaymentSuccess={() => {
+                localStorage.setItem('spm_user_role', 'master');
+                setUserRole('master');
+                setTimeout(() => {
+                  setIsPaymentGatewayOpen(false);
+                }, 2000);
+              }}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
