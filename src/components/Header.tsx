@@ -65,7 +65,7 @@ export default function Header({ activeTab, setActiveTab, onOpenProfile, onOpenP
                 activeTab === 'admin' ? 'opacity-100 font-bold after:absolute after:bottom-[-12px] after:left-0 after:right-0 after:h-[2px] after:bg-white after:rounded-full' : 'opacity-85'
               }`}
             >
-              For Dealers
+              For Dealers & Builders
             </button>
             <button
               onClick={() => setActiveTab('seo')}
@@ -89,8 +89,8 @@ export default function Header({ activeTab, setActiveTab, onOpenProfile, onOpenP
               }}
               className="bg-white text-[#005ca8] hover:bg-slate-50 border border-transparent px-4 py-1.5 rounded-full font-bold text-xs flex items-center gap-1.5 transition-all shadow-md hover:scale-[1.02] cursor-pointer"
             >
-              <span>Post property</span>
-              <span className="bg-[#ff6b35] text-white text-[9px] px-1.5 py-0.5 rounded font-black tracking-wide leading-none">
+              <span>Post Property</span>
+              <span className="bg-emerald-600 text-white text-[9px] px-1.5 py-0.5 rounded-md font-black tracking-wide leading-none">
                 FREE
               </span>
             </button>
@@ -153,7 +153,7 @@ export default function Header({ activeTab, setActiveTab, onOpenProfile, onOpenP
               }}
               className="block w-full text-left py-2 hover:bg-white/10 px-3 rounded-lg"
             >
-              For Dealers
+              For Dealers & Builders
             </button>
             <button
               onClick={() => {

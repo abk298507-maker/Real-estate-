@@ -157,10 +157,18 @@ export default function App() {
       }
       // Filter by property type
       if (heroFilters.propertyType !== 'All Residential') {
-        // e.g. "villa" or "apartment"
-        if (heroFilters.propertyType === 'Villa' && !p.name.toLowerCase().includes('villa')) return false;
-        if (heroFilters.propertyType === 'Studio Apartment' && !p.name.toLowerCase().includes('studio')) return false;
-        if (heroFilters.propertyType === 'Flat/Apartment' && !p.name.toLowerCase().includes('apartment') && !p.name.toLowerCase().includes('flat')) return false;
+        const typeLower = heroFilters.propertyType.toLowerCase();
+        if (typeLower === 'flats' || typeLower === 'flat/apartment') {
+          if (!p.name.toLowerCase().includes('apartment') && !p.name.toLowerCase().includes('flat') && !p.name.toLowerCase().includes('bhk')) return false;
+        } else if (typeLower === 'plots' || typeLower === 'plots/land') {
+          if (!p.name.toLowerCase().includes('plot') && !p.name.toLowerCase().includes('land')) return false;
+        } else if (typeLower === 'commercial') {
+          if (!p.name.toLowerCase().includes('commercial') && !p.name.toLowerCase().includes('office') && !p.name.toLowerCase().includes('shop')) return false;
+        } else if (typeLower === 'independent house' || typeLower === 'villa') {
+          if (!p.name.toLowerCase().includes('house') && !p.name.toLowerCase().includes('villa') && !p.name.toLowerCase().includes('home')) return false;
+        } else {
+          if (!p.name.toLowerCase().includes(typeLower)) return false;
+        }
       }
       // Filter by budget
       if (heroFilters.budget !== 'Budget' && heroFilters.budget !== 'Any Budget') {
