@@ -1,4 +1,5 @@
 import React from 'react';
+import { SignedIn, SignedOut, SignInButton, useUser } from '@clerk/clerk-react';
 import { ActiveTab, InquiryFormData, PropertyItem } from './types';
 import { 
   YAMUNA_EXPRESSWAY_LISTINGS, 
@@ -133,6 +134,7 @@ const DEFAULT_RECOMMENDED_PROPERTIES = [
 ];
 
 export default function App() {
+  const { user, isLoaded, isSignedIn } = useUser();
   const [activeTab, setActiveTab] = React.useState<ActiveTab>('home');
   const [quickSearch, setQuickSearch] = React.useState<string>('');
   const [quickType, setQuickType] = React.useState<'Buy' | 'Sell' | 'Rent'>('Buy');
@@ -560,17 +562,33 @@ export default function App() {
                     })}
                   </div>
 
-                  {/* Right Column Area Sidebar: Guest User Activity Box */}
+                  {/* Right Column Area Sidebar: Guest or Clerk User Activity Box */}
                   <div className="lg:col-span-1 bg-white border border-slate-150 rounded-2xl p-5 shadow-xs flex flex-col space-y-4 animate-in fade-in slide-in-from-right duration-300">
                     {/* User Profile Header */}
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center border border-slate-200 shadow-inner">
-                        <span className="text-xl">👤</span>
-                      </div>
-                      <div>
-                        <h4 className="font-extrabold text-[#091e42] text-sm">Guest User</h4>
-                        <span className="text-[9px] bg-slate-100 text-slate-500 font-bold px-1.5 py-0.5 rounded uppercase">offline</span>
-                      </div>
+                      {isSignedIn && user ? (
+                        <>
+                          <img 
+                            src={user.imageUrl} 
+                            alt={user.fullName || "User"} 
+                            className="w-11 h-11 rounded-full border border-slate-250 shadow-inner object-cover"
+                          />
+                          <div className="min-w-0 flex-1">
+                            <h4 className="font-extrabold text-[#091e42] text-sm truncate">{user.fullName || user.primaryEmailAddress?.emailAddress || "Verified User"}</h4>
+                            <span className="text-[9px] bg-emerald-100 text-emerald-800 font-extrabold px-1.5 py-0.5 rounded uppercase">online (clerk)</span>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <div className="w-11 h-11 rounded-full bg-slate-100 flex items-center justify-center border border-slate-200 shadow-inner">
+                            <span className="text-xl">👤</span>
+                          </div>
+                          <div>
+                            <h4 className="font-extrabold text-[#091e42] text-sm">Guest User</h4>
+                            <span className="text-[9px] bg-slate-100 text-slate-500 font-bold px-1.5 py-0.5 rounded uppercase">offline</span>
+                          </div>
+                        </>
+                      )}
                     </div>
 
                     {/* Divider */}
@@ -595,17 +613,33 @@ export default function App() {
                       </div>
                     </div>
 
-                    <p className="text-slate-500 text-xs font-semibold leading-relaxed">
-                      Save your searches, viewed properties, and shortlist activities across all of your devices.
-                    </p>
+                    {isSignedIn ? (
+                      <p className="text-slate-500 text-xs font-semibold leading-relaxed">
+                        You are signed in with your secure Clerk account. Your shortlists, inquiries, and preferences are synchronized.
+                      </p>
+                    ) : (
+                      <p className="text-slate-500 text-xs font-semibold leading-relaxed">
+                        Save your searches, viewed properties, and shortlist activities across all of your devices.
+                      </p>
+                    )}
 
                     {/* CTA Button */}
-                    <button
-                      onClick={() => setIsProfileOpen(true)}
-                      className="w-full py-3 bg-[#0078db] hover:bg-[#005ca8] text-white text-xs font-extrabold rounded-xl shadow-md shadow-[#0078db]/10 transition-all hover:scale-[1.01] active:scale-[0.99] cursor-pointer text-center"
-                    >
-                      Login/Register to Save Activity
-                    </button>
+                    {isSignedIn ? (
+                      <button
+                        onClick={() => setIsProfileOpen(true)}
+                        className="w-full py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-extrabold rounded-xl transition-all cursor-pointer text-center border border-slate-250 shadow-xs"
+                      >
+                        View Profile Actions
+                      </button>
+                    ) : (
+                      <SignInButton mode="modal">
+                        <button
+                          className="w-full py-2.5 bg-[#0078db] hover:bg-[#005ca8] text-white text-xs font-extrabold rounded-xl shadow-md shadow-[#0078db]/10 transition-all hover:scale-[1.01] active:scale-[0.99] cursor-pointer text-center"
+                        >
+                          Login/Register to Save Activity
+                        </button>
+                      </SignInButton>
+                    )}
                   </div>
 
                 </div>

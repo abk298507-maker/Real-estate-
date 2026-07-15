@@ -1,4 +1,5 @@
 import React from 'react';
+import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react';
 import { ActiveTab } from '../types';
 import { User, Settings, TrendingUp, Menu, X, Plus, Headphones, ChevronDown } from 'lucide-react';
 
@@ -150,15 +151,38 @@ export default function Header({ activeTab, setActiveTab, onOpenProfile, onOpenP
               <Headphones className="w-4 h-4 text-slate-600" />
             </button>
 
-            {/* User Profile avatar circle */}
-            <button
-              onClick={onOpenProfile}
-              className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-700 text-xs transition-all cursor-pointer border border-slate-200 relative"
-              title="User Actions & History"
-            >
-              <span>👤</span>
-              <span className="absolute top-0.5 right-0.5 w-2 h-2 bg-red-500 rounded-full border border-white"></span>
-            </button>
+            {/* User Profile / Authentication controls */}
+            <SignedOut>
+              <SignInButton mode="modal">
+                <button
+                  className="px-3 py-1.5 bg-[#0078db] hover:bg-[#005ca8] text-white text-xs font-extrabold rounded-full transition-all cursor-pointer shadow-xs hover:scale-[1.02] active:scale-[0.98]"
+                  title="Sign In with Clerk"
+                >
+                  Sign In
+                </button>
+              </SignInButton>
+              <button
+                onClick={onOpenProfile}
+                className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-700 text-xs transition-all cursor-pointer border border-slate-200 relative"
+                title="User Actions & History"
+              >
+                <span>👤</span>
+                <span className="absolute top-0.5 right-0.5 w-2 h-2 bg-red-500 rounded-full border border-white"></span>
+              </button>
+            </SignedOut>
+
+            <SignedIn>
+              <button
+                onClick={onOpenProfile}
+                className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-700 text-xs transition-all cursor-pointer border border-slate-200 relative"
+                title="User Actions & History"
+              >
+                <span>👤</span>
+              </button>
+              <div className="flex items-center shrink-0 border border-slate-100 rounded-full p-0.5 shadow-inner">
+                <UserButton />
+              </div>
+            </SignedIn>
 
             {/* Mobile Menu Toggle Button */}
             <button
