@@ -19,6 +19,7 @@ import AllCategories from './components/AllCategories';
 import PremiumServices from './components/PremiumServices';
 import SearchSimulator from './components/SearchSimulator';
 import PostProperty from './components/PostProperty';
+import AIAssistant from './components/AIAssistant';
 import { UserProfileDrawer, PostPropertyWizard, StuckInFormPopup } from './components/My99AcresServices';
 import { 
   Phone, 
@@ -1126,6 +1127,18 @@ export default function App() {
               setInquiries={setInquiries}
               whatsappNumbers={whatsappNumbers}
               setWhatsappNumbers={setWhatsappNumbers}
+            />
+          </div>
+        )}
+
+        {/* VIEW: SHARMA PROP MART AI DASHBOARD */}
+        {activeTab === 'ai-dashboard' && (
+          <div className="py-4">
+            <AIAssistant 
+              showToast={(msg) => {
+                setNotification(msg);
+                setTimeout(() => setNotification(null), 3000);
+              }}
             />
           </div>
         )}

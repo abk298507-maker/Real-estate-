@@ -23,4 +23,4 @@ export interface InquiryFormData {
   message: string;
 }
 
-export type ActiveTab = 'home' | 'categories' | 'services' | 'yamuna' | 'noida' | 'inquiry' | 'contact' | 'admin' | 'seo' | 'post-property';
+export type ActiveTab = 'home' | 'categories' | 'services' | 'yamuna' | 'noida' | 'inquiry' | 'contact' | 'admin' | 'seo' | 'post-property' | 'ai-dashboard';

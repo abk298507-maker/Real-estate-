@@ -120,6 +120,17 @@ export default function Header({ activeTab, setActiveTab, onOpenProfile, onOpenP
                   NEW
                 </span>
               </button>
+              <button
+                onClick={() => setActiveTab('ai-dashboard')}
+                className={`relative py-1 cursor-pointer transition-all flex items-center gap-1 ${
+                  activeTab === 'ai-dashboard' ? 'text-[#34a853] font-extrabold after:absolute after:bottom-[-20px] after:left-0 after:right-0 after:h-[3px] after:bg-[#34a853] after:rounded-full' : 'text-slate-600 hover:text-[#34a853]'
+                }`}
+              >
+                <span>AI Core</span>
+                <span className="bg-purple-600 text-[8px] font-black px-1.5 py-0.5 rounded text-white uppercase leading-none">
+                  Beta
+                </span>
+              </button>
             </nav>
           </div>
 
@@ -245,6 +256,18 @@ export default function Header({ activeTab, setActiveTab, onOpenProfile, onOpenP
               <span>Insights</span>
               <span className="bg-red-500 text-[8px] font-black px-1.5 py-0.5 rounded text-white animate-pulse">
                 NEW
+              </span>
+            </button>
+            <button
+              onClick={() => {
+                setActiveTab('ai-dashboard');
+                setMobileMenuOpen(false);
+              }}
+              className="block w-full text-left py-2 hover:bg-slate-50 px-3 rounded-lg text-slate-700 flex items-center gap-1.5"
+            >
+              <span>AI Core</span>
+              <span className="bg-purple-600 text-[8px] font-black px-1.5 py-0.5 rounded text-white">
+                BETA
               </span>
             </button>
             <button
